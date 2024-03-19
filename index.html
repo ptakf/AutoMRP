@@ -1,64 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AutoMRP</title>
-    <link rel="icon" href="assets/img/favicon.ico" />
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <script src="assets/js/main.js" defer></script>
-  </head>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AutoMRP</title>
+        <link rel="icon" href="assets/img/favicon.ico" />
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <script src="assets/js/main.js" defer></script>
+    </head>
 
-  <body class="bg-light">
-    <!-- ========== HEADER ========== -->
-    <header
-      class="d-flex justify-content-center bg-primary text-light fw-bold font-serif shadow p-2"
-    >
-      <div class="d-flex align-items-center">
-        <!-- <img src="assets/img/favicon.ico" alt="logo" width="50" height="50" /> -->
-        <span class="ms-3 fs-3">AutoMRP - MRP Planner</span>
-      </div>
-    </header>
+    <body class="bg-light">
+        <!-- ========== HEADER ========== -->
+        <header
+            class="d-flex justify-content-center bg-primary text-light fw-bold font-serif shadow p-2"
+        >
+            <div class="d-flex align-items-center">
+                <!-- <img src="assets/img/favicon.ico" alt="logo" width="50" height="50" /> -->
+                <span class="ms-3 fs-3">AutoMRP - MRP Planner</span>
+            </div>
+        </header>
 
-    <!-- ========== MAIN CONTENT ========== -->
-    <div class="container min-vh-100 bg-white shadow">
-      <!-- ========== MPS TABLE ========== -->
-      <h1 class="pt-4">MPS</h1>
-      <table class="table table-striped-columns table-bordered mt-3">
-        <div>
-          <tr>
-            <th class="bg-primary text-light">Week</th>
-            <td class="bg-primary text-light text-center px-4"></td>
-          </tr>
-          <tr>
-            <th>Anticipated Demand</th>
-            <td>
-              <input
-                class="w-100 text-center"
-                type="text"
-                pattern="^[1-9]\d*$"
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>Production</th>
-            <td>
-              <input
-                class="w-100 text-center"
-                type="text"
-                pattern="^[1-9]\d*$"
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>Available</th>
-            <td class="text-center"></td>
-          </tr>
+        <!-- ========== MAIN CONTENT ========== -->
+        <div class="container min-vh-100 bg-white shadow">
+            <!-- ========== MPS TABLE ========== -->
+            <h1 class="pt-4">MPS</h1>
+            <!-- ---------- Week Amount Input ---------- -->
+            <!-- <form class="d-block"> -->
+            <label for="set-week-amount-input" class="fs-4">Week Amount</label>
+            <div class="d-inline-flex ms-3">
+                <input
+                    id="set-week-amount-input"
+                    class="form-control me-3"
+                    type="number"
+                    placeholder="Enter week amount"
+                    pattern="^[1-9]\d*$"
+                    required
+                />
+                <button class="btn btn-primary" onclick="setWeekAmount()">
+                    Set
+                </button>
+            </div>
+            <!-- </form> -->
+
+            <!-- ---------- MPS Table ---------- -->
+            <table
+                class="mps-table table table-striped-columns table-bordered mt-3"
+            >
+                <!-- <div>
+                    <tr class="week-row">
+                        <th class="bg-primary text-light">Week</th>
+                    </tr>
+                    <tr class="anticipated-row">
+                        <th>Anticipated Demand</th>
+                        <td>
+                            <input
+                                class="w-100 text-center"
+                                type="text"
+                                pattern="^[1-9]\d*$"
+                            />
+                        </td>
+                    </tr>
+                    <tr class="production-row">
+                        <th>Production</th>
+                        <td>
+                            <input
+                                class="w-100 text-center"
+                                type="text"
+                                pattern="^[1-9]\d*$"
+                            />
+                        </td>
+                    </tr>
+                    <tr class="available-row">
+                        <th>Available</th>
+                        <td class="text-center"></td>
+                    </tr>
+                </div> -->
+            </table>
+            <!-- ========== MRP TABLES ========== -->
+            <h1 class="pt-4">MRP</h1>
         </div>
-      </table>
-      <!-- ========== MRP TABLES ========== -->
-      <h1 class="pt-4">MRP</h1>
-    </div>
-  </body>
+    </body>
 </html>

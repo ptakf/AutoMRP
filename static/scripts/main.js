@@ -55,9 +55,9 @@ function resetMpsTable() {
       </table>
     `;
 
-    document
-        .querySelector("table.mps-table")
-        .replaceWith(createHtmlElementFromString(MpsTableTemplate));
+    // document
+    //     .querySelector("table.mps-table")
+    //     .replaceWith(createHtmlElementFromString(MpsTableTemplate));
 }
 
 function createMpsTable() {

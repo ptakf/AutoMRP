@@ -47,6 +47,37 @@
             <table
                 class="mps-table table table-striped-columns table-bordered mt-3"
             ></table>
+            <!-- ---------- Realization Time and On Hand Input ---------- -->
+            <!-- <form class="d-block"> -->
+                <label for="set-realization-time-input" class="fs-4">Realization Time</label>
+                <div class="d-inline-flex ms-3">
+                    <input
+                        id="set-realization-time-input"
+                        class="form-control me-3"
+                        type="number"
+                        placeholder="Enter realization time"
+                        pattern="^[1-9]\d*$"
+                        required
+                    />
+                    <button class="btn btn-primary" onclick="setRealizationTime()">
+                        Set
+                    </button>
+                </div>
+                <label for="set-on-hand-input" class="fs-4 ps-3">On Hand</label>
+                <div class="d-inline-flex ms-3">
+                    <input
+                        id="set-on-hand-input"
+                        class="form-control me-3"
+                        type="number"
+                        placeholder="Enter on hand"
+                        pattern="^[1-9]\d*$"
+                        required
+                    />
+                    <button class="btn btn-primary" onclick="setOnHand()">
+                        Set
+                    </button>
+                </div>
+                <!-- </form> -->
             <!-- ========== MRP TABLES ========== -->
             <h1 class="pt-4">MRP</h1>
         </div>

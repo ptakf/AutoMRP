@@ -3,9 +3,11 @@ var weekAmount = 10;
 var anticipatedDemandList = [];
 var productionList = [];
 var availableList = [];
+var realizationTime = 1;
+var onHand = 0;
 
 function debounce(callback, delay) {
-    // Delay executing the function passed as an argument.
+    // Delay executing the function passed as an argument
     let timer;
     return () => {
         if (timer) clearTimeout(timer);
@@ -21,6 +23,19 @@ function setWeekAmount() {
     createMpsTable();
 }
 
+function setRealizationTime() {
+    realizationTime = document.getElementById(
+        "set-realization-time-input"
+    ).value;
+}
+
+function setOnHand() {
+    onHand = document.getElementById("set-on-hand-input").value;
+
+    calculateMps();
+    createMpsTable();
+}
+
 function createHtmlElementFromString(template) {
     let parent = document.createElement("div");
     parent.innerHTML = template.trim();
@@ -29,7 +44,7 @@ function createHtmlElementFromString(template) {
 }
 
 function createTdElementFromString(innerText = "", className = "") {
-    // TODO: Figure out why it's not possible to use createHtmlElement() with <td> tags.
+    // TODO: Figure out why it's not possible to use createHtmlElement() with <td> tags
     let tdElement = document.createElement("td");
     tdElement.innerText = innerText;
     tdElement.className = className;
@@ -45,7 +60,7 @@ function fillMpsTable() {
             .appendChild(
                 createTdElementFromString(
                     `${i + 1}`,
-                    "bg-primary text-light text-center px-4"
+                    "bg-primary text-light text-center"
                 )
             );
     }
@@ -61,10 +76,37 @@ function fillMpsTable() {
                     class="w-100 text-center"
                     type="text"
                     pattern="^[1-9]\d*$"
-                    oninput=""
+                    oninput="calculateMps()"
                     value="${anticipatedDemandList[i]}"
                     />
                 `)
+            );
+    }
+
+    for (let i = 0; i < weekAmount; i++) {
+        // Fill Production row
+        document
+            .querySelector("table.mps-table tr.production-row")
+            .appendChild(document.createElement("td"))
+            .appendChild(
+                createHtmlElementFromString(`
+                    <input
+                    class="w-100 text-center"
+                    type="text"
+                    pattern="^[1-9]\d*$"
+                    oninput="calculateMps()"
+                    value="${productionList[i]}"
+                    />
+                `)
+            );
+    }
+
+    for (let i = 0; i < weekAmount; i++) {
+        // Fill Available row
+        document
+            .querySelector("table.mps-table tr.available-row")
+            .appendChild(
+                createTdElementFromString(`${availableList[i]}`, "text-center")
             );
     }
 }
@@ -97,10 +139,15 @@ function resetMpsTable() {
 function createMpsTable() {
     resetMpsTable();
     fillMpsTable();
+
+    document.getElementById("set-realization-time-input").value =
+        realizationTime;
+
+    document.getElementById("set-on-hand-input").value = onHand;
 }
 
 function resizeLists() {
-    // Resize the lists according to the weekAmount variable. Fill empty slots with 0s.
+    // Resize the lists according to the weekAmount variable. Fill empty slots with 0s
     for (array of [anticipatedDemandList, productionList, availableList]) {
         while (weekAmount > array.length) {
             array.push(0);
@@ -108,6 +155,49 @@ function resizeLists() {
 
         array.length = weekAmount;
     }
+}
+
+function updateLists() {
+    // Update lists with values from input elements
+    // Update Anticipated Demand list
+    let anticipatedDemandInputElements = document.querySelectorAll(
+        "table.mps-table tr.anticipated-row td input"
+    );
+
+    for (let i = 0; i < weekAmount; i++) {
+        anticipatedDemandList[i] = Number(
+            anticipatedDemandInputElements[i].value
+        );
+    }
+
+    // Update Production list
+    let productionInputElements = document.querySelectorAll(
+        "table.mps-table tr.production-row td input"
+    );
+
+    for (let i = 0; i < weekAmount; i++) {
+        productionList[i] = Number(productionInputElements[i].value);
+    }
+}
+
+function calculateMps() {
+    // Calculate product availability in the MPS
+    updateLists();
+
+    for (let i = 0; i < weekAmount; i++) {
+        if (i == 0) {
+            availableList[i] = onHand - anticipatedDemandList[i];
+        } else {
+            availableList[i] =
+                availableList[i - 1] -
+                anticipatedDemandList[i] +
+                productionList[i];
+        }
+    }
+
+    // TODO: implement displaying the calculated availability in the MPS table
+
+    console.log(availableList); // TODO: remove this
 }
 
 // Initialize components

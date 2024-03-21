@@ -5,7 +5,7 @@ var productionList = [];
 var availableList = [];
 
 function debounce(callback, delay) {
-    // Function that delays executing the function passed as an argument.
+    // Delay executing the function passed as an argument.
     let timer;
     return () => {
         if (timer) clearTimeout(timer);
@@ -17,6 +17,7 @@ function setWeekAmount() {
     weekAmount = document.getElementById("set-week-amount-input").value;
     document.getElementById("set-week-amount-input").value = "";
 
+    resizeLists();
     createMpsTable();
 }
 
@@ -98,14 +99,17 @@ function createMpsTable() {
     fillMpsTable();
 }
 
-function initializeLists() {
-    // Fill the lists with 0s
+function resizeLists() {
+    // Resize the lists according to the weekAmount variable. Fill empty slots with 0s.
     for (array of [anticipatedDemandList, productionList, availableList]) {
+        while (weekAmount > array.length) {
+            array.push(0);
+        }
+
         array.length = weekAmount;
-        array.fill(0);
     }
 }
 
 // Initialize components
-initializeLists();
+resizeLists();
 createMpsTable();

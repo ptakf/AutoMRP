@@ -3,7 +3,7 @@ var weekAmount = 10;
 var anticipatedDemandList = [];
 var productionList = [];
 var availableList = [];
-var realizationTime = 1;
+var leadTime = 1;
 var onHand = 0;
 
 function debounce(callback, delay) {
@@ -23,9 +23,9 @@ function setWeekAmount() {
     createMpsTable();
 }
 
-function setRealizationTime() {
-    realizationTime = document.getElementById(
-        "set-realization-time-input"
+function setLeadTime() {
+    leadTime = document.getElementById(
+        "set-lead-time-input"
     ).value;
 }
 
@@ -60,7 +60,7 @@ function fillMpsTable() {
             .appendChild(
                 createTdElementFromString(
                     `${i + 1}`,
-                    "bg-primary text-light text-center"
+                    "bg-primary text-light text-center fw-bold"
                 )
             );
     }
@@ -140,8 +140,8 @@ function createMpsTable() {
     resetMpsTable();
     fillMpsTable();
 
-    document.getElementById("set-realization-time-input").value =
-        realizationTime;
+    document.getElementById("set-lead-time-input").value =
+        leadTime;
 
     document.getElementById("set-on-hand-input").value = onHand;
 }

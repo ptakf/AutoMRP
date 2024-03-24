@@ -19,9 +19,7 @@ function setWeekAmount() {
     weekAmount = document.getElementById("set-week-amount-input").value;
     document.getElementById("set-week-amount-input").value = "";
 
-    resizeLists();
     createMpsTable();
-    calculateMps();
 }
 
 function createHtmlElementFromString(template) {
@@ -126,14 +124,13 @@ function resetMpsTable() {
 }
 
 function createMpsTable(initializeTable = false) {
-    if (initializeTable) {
-        // Fill Lead Time and On Hand
-        document.getElementById("set-lead-time-input").value = leadTime;
-        document.getElementById("set-on-hand-input").value = onHand;
-    }
-
+    resizeLists();
     resetMpsTable();
     fillMpsTable();
+
+    if (!initializeTable) {
+        calculateMps();
+    }
 }
 
 function resizeLists() {
@@ -201,5 +198,6 @@ function calculateMps() {
 }
 
 // Initialize components
-resizeLists();
 createMpsTable(true);
+document.getElementById("set-lead-time-input").value = leadTime;
+document.getElementById("set-on-hand-input").value = onHand;

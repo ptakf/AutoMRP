@@ -24,9 +24,7 @@ function setWeekAmount() {
 }
 
 function setLeadTime() {
-    leadTime = document.getElementById(
-        "set-lead-time-input"
-    ).value;
+    leadTime = document.getElementById("set-lead-time-input").value;
 }
 
 function setOnHand() {
@@ -43,7 +41,7 @@ function createHtmlElementFromString(template) {
     return parent.firstChild;
 }
 
-function createTdElementFromString(innerText = "", className = "") {
+function createTdElement(innerText = "", className = "") {
     // TODO: Figure out why it's not possible to use createHtmlElement() with <td> tags
     let tdElement = document.createElement("td");
     tdElement.innerText = innerText;
@@ -58,7 +56,7 @@ function fillMpsTable() {
         document
             .querySelector("table.mps-table tr.week-row")
             .appendChild(
-                createTdElementFromString(
+                createTdElement(
                     `${i + 1}`,
                     "bg-primary text-light text-center fw-bold"
                 )
@@ -105,9 +103,7 @@ function fillMpsTable() {
         // Fill Available row
         document
             .querySelector("table.mps-table tr.available-row")
-            .appendChild(
-                createTdElementFromString(`${availableList[i]}`, "text-center")
-            );
+            .appendChild(createTdElement(`${availableList[i]}`, "text-center"));
     }
 }
 
@@ -140,8 +136,7 @@ function createMpsTable() {
     resetMpsTable();
     fillMpsTable();
 
-    document.getElementById("set-lead-time-input").value =
-        leadTime;
+    document.getElementById("set-lead-time-input").value = leadTime;
 
     document.getElementById("set-on-hand-input").value = onHand;
 }
@@ -186,7 +181,8 @@ function calculateMps() {
 
     for (let i = 0; i < weekAmount; i++) {
         if (i == 0) {
-            availableList[i] = onHand - anticipatedDemandList[i];
+            availableList[i] =
+                onHand - anticipatedDemandList[i] + productionList[i];
         } else {
             availableList[i] =
                 availableList[i - 1] -

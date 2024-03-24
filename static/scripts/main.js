@@ -124,13 +124,17 @@ function resetMpsTable() {
 }
 
 function createMpsTable(initializeTable = false) {
+    if (initializeTable) {
+        document.getElementById("set-lead-time-input").value = leadTime;
+        document.getElementById("set-on-hand-input").value = onHand;
+    }
+
     resizeLists();
+
     resetMpsTable();
     fillMpsTable();
 
-    if (!initializeTable) {
-        calculateMps();
-    }
+    calculateMps();
 }
 
 function resizeLists() {
@@ -199,5 +203,3 @@ function calculateMps() {
 
 // Initialize components
 createMpsTable(true);
-document.getElementById("set-lead-time-input").value = leadTime;
-document.getElementById("set-on-hand-input").value = onHand;

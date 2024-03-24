@@ -49,9 +49,7 @@
             ></table>
             <!-- ---------- Lead Time and On Hand Input ---------- -->
             <!-- <form class="d-block"> -->
-            <label for="set-lead-time-input" class="fs-4"
-                >Lead Time</label
-            >
+            <label for="set-lead-time-input" class="fs-4">Lead Time</label>
             <div class="d-inline-flex ms-3">
                 <input
                     id="set-lead-time-input"
@@ -59,11 +57,9 @@
                     type="number"
                     placeholder="Enter lead time"
                     pattern="^[1-9]\d*$"
+                    oninput="debounce(calculateMps, 400)()"
                     required
                 />
-                <button class="btn btn-primary" onclick="setLeadTime()">
-                    Set
-                </button>
             </div>
             <label for="set-on-hand-input" class="fs-4 ps-3">On Hand</label>
             <div class="d-inline-flex ms-3">
@@ -73,11 +69,9 @@
                     type="number"
                     placeholder="Enter on hand"
                     pattern="^[1-9]\d*$"
+                    oninput="debounce(calculateMps, 400)()"
                     required
                 />
-                <button class="btn btn-primary" onclick="setOnHand()">
-                    Set
-                </button>
             </div>
             <!-- </form> -->
             <!-- ========== MRP TABLES ========== -->

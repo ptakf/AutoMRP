@@ -45,7 +45,7 @@ function fillMpsTable() {
             .querySelector("table.mps-table tr.week-row")
             .appendChild(
                 createTableElement(
-                    "td",
+                    "th",
                     `${i + 1}`,
                     "bg-primary text-light text-center fw-bold"
                 )
@@ -101,7 +101,7 @@ function fillMpsTable() {
 function resetMpsTable() {
     const MpsTableTemplate = `
             <table
-            class="mps-table table table-striped-columns table-bordered mt-3"
+            class="mps-table table table-striped-columns table-bordered"
         >
             <tr class="week-row">
                 <th class="bg-primary text-light">Week</th>

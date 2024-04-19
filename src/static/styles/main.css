@@ -1,0 +1,71 @@
+body{
+    background-color: #f8f9fe;
+}
+
+header, footer{
+    padding-top: 16px;
+    padding-bottom: 16px;
+    background-color: #3b49e7;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1)
+}
+
+footer{
+    box-shadow: -6px -6px 10px rgba(0, 0, 0, 0.1)
+}
+
+header h1{
+    font-size: 36px;
+}
+
+button{
+    background-color: #3b49e7 !important;
+    color: white !important;
+}
+
+section label, input{
+    display: block;
+}
+
+main section{
+    background-color: #fefefe;
+    padding: 40px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 16px;
+    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+table .week-row th{
+    background-color: #697afd !important;
+}
+
+table input{
+    border: 1px solid grey;
+    border-radius: 8px !important
+}
+
+#bottom-row .row label{
+    width: 20%;   
+}
+
+#bottom-row .row input{
+    width: 20%;   
+}
+
+@media only screen and (max-width: 920px) {
+    section h2{
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    #bottom-row  .row label{
+        width: 40%;   
+    }
+    
+    #bottom-row .row input{
+        width: 60%;   
+    }    
+}

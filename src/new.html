@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AutoMRP</title>
+        <link rel="icon" href="static/assets/icons/favicon.ico" />
+        <link rel="stylesheet" href="static/styles/bootstrap.min.css" />
+        <link rel="stylesheet" href="static/styles/main.css" />
+        <script src="static/scripts/main.js" defer></script>
+    </head>
+</html>
+
+<body>
+    <header class="container-fluid">
+        <div class="row">
+            <h1>AutoMRP - MRP Planner</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2>MPS</h2>
+                    </div>  
+                    <div class="col-md-3">
+                        <label for="set-week-amount-input">Week Amount</label>
+                        <input
+                            id="set-week-amount-input"
+                            type="number"
+                            placeholder="Enter week amount"
+                            pattern="^[1-9]\d*$"
+                            required
+                        />
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn" onclick="setWeekAmount()">
+                            Set
+                        </button> 
+                    </div>
+                </div>
+
+                <div class="row">
+                    <table class="mps-table table table-striped-columns table-bordered"></table>
+                </div>
+
+                <div class="row" id="bottom-row">
+                    <div class="col-6 d-inline-flex">
+                        <label for="set-lead-time-input">Lead Time</label>
+                        <input
+                            id="set-lead-time-input"
+                            class="form-control me-3"
+                            type="number"
+                            placeholder="Enter lead time"
+                            pattern="^[1-9]\d*$"
+                            oninput="debounce(calculateMps, 400)()"
+                            required
+                        />                    
+                    </div>
+                    <div class="col-6 d-inline-flex">
+                        <label for="set-on-hand-input">On Hand</label>
+                        <input
+                            id="set-on-hand-input"
+                            class="form-control me-3"
+                            type="number"
+                            placeholder="Enter on hand"
+                            pattern="^[1-9]\d*$"
+                            oninput="debounce(calculateMps, 400)()"
+                            required
+                        />                      
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2>MRP</h2>
+                    </div>  
+             
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <h5>Ptak - Malichenko - Taf - Warszawski &copy; 2024</h5>
+    </footer>
+</body>

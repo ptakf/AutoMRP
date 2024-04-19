@@ -101,10 +101,9 @@ function fillMpsTable() {
 function resetMpsTable() {
     const MpsTableTemplate = `
             <table
-            class="mps-table table table-striped-columns table-bordered"
-        >
+            class="mps-table table table-striped-columns table-bordered">
             <tr class="week-row">
-                <th class="bg-primary text-light">Week</th>
+                <th>Week</th>
             </tr>
             <tr class="anticipated-row">
                 <th>Anticipated Demand</th>

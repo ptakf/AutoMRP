@@ -25,17 +25,16 @@
                     <div class="col-md-8">
                         <h2>MPS</h2>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4 d-inline-flex" id="top-row">
                         <label for="set-week-amount-input">Week Amount</label>
                         <input
                             id="set-week-amount-input"
+                            class="form-control"
                             type="number"
-                            placeholder="Enter week amount"
+                            value="10"
                             pattern="^[1-9]\d*$"
                             required
                         />
-                    </div>
-                    <div class="col-md-1">
                         <button class="btn" onclick="setWeekAmount()">
                             Set
                         </button>
@@ -49,11 +48,11 @@
                 </div>
 
                 <div class="row" id="bottom-row">
-                    <div class="col-6 d-inline-flex">
+                    <div class="col-sm-6 d-inline-flex">
                         <label for="set-lead-time-input">Lead Time</label>
                         <input
                             id="set-lead-time-input"
-                            class="form-control me-3"
+                            class="form-control"
                             type="number"
                             placeholder="Enter lead time"
                             pattern="^[1-9]\d*$"
@@ -61,11 +60,11 @@
                             required
                         />
                     </div>
-                    <div class="col-6 d-inline-flex">
+                    <div class="col-sm-6 d-inline-flex">
                         <label for="set-on-hand-input">On Hand</label>
                         <input
                             id="set-on-hand-input"
-                            class="form-control me-3"
+                            class="form-control"
                             type="number"
                             placeholder="Enter on hand"
                             pattern="^[1-9]\d*$"

@@ -1,8 +1,9 @@
-body{
+body {
     background-color: #f8f9fe;
 }
 
-header, footer{
+header,
+footer {
     padding-top: 16px;
     padding-bottom: 16px;
     background-color: #3b49e7;
@@ -11,24 +12,47 @@ header, footer{
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1)
 }
 
-footer{
+footer {
     box-shadow: -6px -6px 10px rgba(0, 0, 0, 0.1)
 }
 
-header h1{
+header h1 {
     font-size: 36px;
 }
 
-button{
+#top-row {
+    margin-bottom: 20px;
+}
+
+#top-row  input{
+    margin: 0 auto;
+    width: 50%;
+}
+
+#top-row label{
+    line-height: 200%;
+}
+
+button {
     background-color: #3b49e7 !important;
     color: white !important;
 }
 
-section label, input{
+section label,
+input {
     display: block;
 }
 
-main section{
+input[type='number'] {
+    .no-arrows::-webkit-outer-spin-button,
+    .no-arrows::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    -moz-appearance: textfield;
+}
+
+section {
     background-color: #fefefe;
     padding: 40px;
     margin-top: 50px;
@@ -37,35 +61,51 @@ main section{
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
-table .week-row th{
+table .week-row th {
     background-color: #697afd !important;
 }
 
-table input{
+table input {
     border: 1px solid grey;
     border-radius: 8px !important
 }
 
-#bottom-row .row label{
-    width: 20%;   
+#bottom-row label {
+    width: 20%;
+    line-height: 200%;
 }
 
-#bottom-row .row input{
-    width: 20%;   
+#bottom-row input {
+    width: 20%;
 }
 
 @media only screen and (max-width: 920px) {
-    section h2{
+    section h2 {
         text-align: center;
         font-size: 32px;
         font-weight: bold;
     }
 
-    #bottom-row  .row label{
-        width: 40%;   
+    #top-row  input{
+        height: 40px;
+        margin-top: 12px;
+        margin-right: 8px;
     }
     
-    #bottom-row .row input{
-        width: 60%;   
-    }    
+    #top-row button{
+        height: 40px;
+        margin-top: 12px;
+    }
+
+    #bottom-row>div:first-child {
+        margin-bottom: 10px;
+    }
+
+    #bottom-row label {
+        width: 60%;
+    }
+
+    #bottom-row input {
+        width: 40%;
+    }
 }

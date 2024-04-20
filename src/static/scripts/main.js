@@ -16,8 +16,7 @@ function debounce(callback, delay) {
 }
 
 function setWeekAmount() {
-    weekAmount = document.getElementById("set-week-amount-input").value;
-    document.getElementById("set-week-amount-input").value = "";
+    weekAmount = document.getElementById("set-week-amount-input").value;    
 
     createMpsTable();
 }
@@ -124,6 +123,7 @@ function resetMpsTable() {
 
 function createMpsTable(initializeTable = false) {
     if (initializeTable) {
+        document.getElementById("set-week-amount-input").value = weekAmount;
         document.getElementById("set-lead-time-input").value = leadTime;
         document.getElementById("set-on-hand-input").value = onHand;
     }

@@ -25,19 +25,23 @@
                     <div class="col-md-8">
                         <h2>MPS</h2>
                     </div>
-                    <div class="col-md-4 d-inline-flex" id="top-row">
-                        <label for="set-week-amount-input">Week Amount</label>
-                        <input
-                            id="set-week-amount-input"
-                            class="form-control"
-                            type="number"
-                            value="10"
-                            pattern="^[1-9]\d*$"
-                            required
-                        />
-                        <button class="btn" onclick="setWeekAmount()">
-                            Set
-                        </button>
+                    <div class="col-md-4" id="top-row">
+                        <form
+                            onsubmit="setWeekAmount(); return false"
+                            class="d-inline-flex"
+                        >
+                            <label for="set-week-amount-input">
+                                Week Amount
+                            </label>
+                            <input
+                                id="set-week-amount-input"
+                                class="form-control"
+                                type="number"
+                                pattern="^[1-9]\d*$"
+                                required
+                            />
+                            <button class="btn" type="submit">Set</button>
+                        </form>
                     </div>
                 </div>
 

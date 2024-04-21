@@ -1,13 +1,13 @@
-import { debounce } from "./modules/utils.js";
 import {
-    weekAmount,
+    calculateMps,
+    createMpsTable,
     leadTime,
     onHand,
-    calculateMps,
     setWeekAmount,
-    createMpsTable,
+    weekAmount,
 } from "./modules/mps.js";
 import { calculateMrps } from "./modules/mrp.js";
+import { debounce } from "./modules/utils.js";
 
 // Initialize MPS components
 document.getElementById("set-week-amount-input").value = weekAmount;

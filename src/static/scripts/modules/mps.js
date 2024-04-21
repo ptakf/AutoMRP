@@ -1,7 +1,7 @@
 import {
-    debounce,
     createHtmlElementFromString,
     createTableElement,
+    debounce,
 } from "./utils.js";
 
 // MPS variables

@@ -21,7 +21,7 @@ export function calculateMrps() {
 // po - Planned orders
 // pro - Planned receipt of orders
 
-export function calculateMrpIns() {
+function calculateMrpIns() {
     let InsOnHand = 22; // Aktualny stan zapasów
     let InsTime = 1; // Czas produkcji
     let InsBatch = 50; // Rozmiar partii
@@ -81,7 +81,7 @@ export function calculateMrpIns() {
     calculateMrpPls(poIns);
 }
 
-export function calculateMrpCar(poIns) {
+function calculateMrpCar(poIns) {
     let CarOnHand = 17;
     let CarTime = 2;
     let CarBatch = 50;
@@ -130,7 +130,7 @@ export function calculateMrpCar(poIns) {
     console.log("------------------------");
 }
 
-export function calculateMrpPls(poIns) {
+function calculateMrpPls(poIns) {
     let PlsOnHand = 43;
     let PlsTime = 4;
     let PlsBatch = 50;
@@ -179,7 +179,7 @@ export function calculateMrpPls(poIns) {
     console.log("------------------------");
 }
 
-export function calculateMrpShl() {
+function calculateMrpShl() {
     let ShlOnHand = 8;
     let ShlTime = 3;
     let ShlBatch = 50;
@@ -229,7 +229,7 @@ export function calculateMrpShl() {
     console.log("------------------------");
 }
 
-export function calculateMrpIsh() {
+function calculateMrpIsh() {
     let IshOnHand = 3;
     let IshTime = 3;
     let IshBatch = 20;
@@ -282,7 +282,7 @@ export function calculateMrpIsh() {
     calculateMrpUls(poIsh);
 }
 
-export function calculateMrpSol(poIsh) {
+function calculateMrpSol(poIsh) {
     let SolOnHand = 24;
     let SolTime = 5;
     let SolBatch = 20;
@@ -331,7 +331,7 @@ export function calculateMrpSol(poIsh) {
     console.log("------------------------");
 }
 
-export function calculateMrpUls(poIsh) {
+function calculateMrpUls(poIsh) {
     let UlsOnHand = 13;
     let UlsTime = 4;
     let UlsBatch = 20;

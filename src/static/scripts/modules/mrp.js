@@ -1,4 +1,4 @@
-import * as mps from "./mps.js";
+import { productionList, weekAmount } from "./mps.js";
 
 // MRP
 export function calculateMrps() {
@@ -26,14 +26,14 @@ export function calculateMrpIns() {
     let InsTime = 1; // Czas produkcji
     let InsBatch = 50; // Rozmiar partii
 
-    let tdIns = mps.productionList.slice(1); // Zapotrzebowanie na wkładki
+    let tdIns = productionList.slice(1); // Zapotrzebowanie na wkładki
     tdIns.push(0);
     let eisIns = []; // Przewidywane na stanie
     let ndIns = []; // Zapotrzebowanie netto
     let poIns = []; // Planowane zamówienia
     let proIns = []; // Planowane przyjęcie zamówień
 
-    for (let i = 0; i < mps.weekAmount; i++) {
+    for (let i = 0; i < weekAmount; i++) {
         let netDemand = InsOnHand - tdIns[i];
         let plannedOrders = 0;
 
@@ -92,7 +92,7 @@ export function calculateMrpCar(poIns) {
     let poCar = [];
     let proCar = [];
 
-    for (let i = 0; i < mps.weekAmount; i++) {
+    for (let i = 0; i < weekAmount; i++) {
         let netDemand = CarOnHand - tdCar[i];
         let plannedOrders = 0;
 
@@ -141,7 +141,7 @@ export function calculateMrpPls(poIns) {
     let poPls = [];
     let proPls = [];
 
-    for (let i = 0; i < mps.weekAmount; i++) {
+    for (let i = 0; i < weekAmount; i++) {
         let netDemand = PlsOnHand - tdPls[i];
         let plannedOrders = 0;
 
@@ -184,14 +184,14 @@ export function calculateMrpShl() {
     let ShlTime = 3;
     let ShlBatch = 50;
 
-    let tdShl = mps.productionList.slice(1);
+    let tdShl = productionList.slice(1);
     tdShl.push(0);
     let eisShl = [];
     let ndShl = [];
     let poShl = [];
     let proShl = [];
 
-    for (let i = 0; i < mps.weekAmount; i++) {
+    for (let i = 0; i < weekAmount; i++) {
         let netDemand = ShlOnHand - tdShl[i];
         let plannedOrders = 0;
 
@@ -234,14 +234,14 @@ export function calculateMrpIsh() {
     let IshTime = 3;
     let IshBatch = 20;
 
-    let tdIsh = mps.productionList.slice(1);
+    let tdIsh = productionList.slice(1);
     tdIsh.push(0);
     let eisIsh = [];
     let ndIsh = [];
     let poIsh = [];
     let proIsh = [];
 
-    for (let i = 0; i < mps.weekAmount; i++) {
+    for (let i = 0; i < weekAmount; i++) {
         let netDemand = IshOnHand - tdIsh[i];
         let plannedOrders = 0;
 
@@ -293,7 +293,7 @@ export function calculateMrpSol(poIsh) {
     let poSol = [];
     let proSol = [];
 
-    for (let i = 0; i < mps.weekAmount; i++) {
+    for (let i = 0; i < weekAmount; i++) {
         let netDemand = SolOnHand - tdSol[i];
         let plannedOrders = 0;
 
@@ -342,7 +342,7 @@ export function calculateMrpUls(poIsh) {
     let poUls = [];
     let proUls = [];
 
-    for (let i = 0; i < mps.weekAmount; i++) {
+    for (let i = 0; i < weekAmount; i++) {
         let netDemand = UlsOnHand - tdUls[i];
         let plannedOrders = 0;
 

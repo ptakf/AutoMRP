@@ -18,7 +18,7 @@ export function setWeekAmount() {
     createMpsTable();
 }
 
-export function fillMpsTable() {
+function fillMpsTable() {
     for (let i = 0; i < weekAmount; i++) {
         // Fill Week row
         document
@@ -80,7 +80,7 @@ export function fillMpsTable() {
     }
 }
 
-export function resetMpsTable() {
+function resetMpsTable() {
     const MpsTableTemplate = `
             <table
             class="mps-table table table-striped-columns table-bordered">
@@ -104,16 +104,7 @@ export function resetMpsTable() {
         .replaceWith(createHtmlElementFromString(MpsTableTemplate));
 }
 
-export function createMpsTable() {
-    resizeLists();
-
-    resetMpsTable();
-    fillMpsTable();
-
-    calculateMps();
-}
-
-export function resizeLists() {
+function resizeLists() {
     // Resize the lists according to the weekAmount variable. Fill empty slots with 0s
     for (let array of [anticipatedDemandList, productionList, availableList]) {
         while (weekAmount > array.length) {
@@ -124,7 +115,7 @@ export function resizeLists() {
     }
 }
 
-export function getVariablesFromInputs() {
+function getVariablesFromInputs() {
     // Update variables with values from input elements
     // Update Lead Time and On Hand
     leadTime = document.getElementById("set-lead-time-input").value;
@@ -175,4 +166,13 @@ export function calculateMps() {
         // Replace values in Available row
         availableElements[i].innerText = availableList[i];
     }
+}
+
+export function createMpsTable() {
+    resizeLists();
+
+    resetMpsTable();
+    fillMpsTable();
+
+    calculateMps();
 }

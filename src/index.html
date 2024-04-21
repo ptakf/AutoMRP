@@ -7,7 +7,7 @@
         <link rel="icon" href="static/assets/icons/favicon.ico" />
         <link rel="stylesheet" href="static/styles/bootstrap.min.css" />
         <link rel="stylesheet" href="static/styles/main.css" />
-        <script src="static/scripts/main.js" defer></script>
+        <script type="module" src="static/scripts/main.js" defer></script>
     </head>
 </html>
 
@@ -60,7 +60,6 @@
                             type="number"
                             placeholder="Enter lead time"
                             pattern="^\d*$"
-                            oninput="debounce(calculateMps, 400)()"
                             required
                         />
                     </div>
@@ -72,7 +71,6 @@
                             type="number"
                             placeholder="Enter on hand"
                             pattern="^\d*$"
-                            oninput="debounce(calculateMps, 400)()"
                             required
                         />
                     </div>
@@ -83,7 +81,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <h2>MRP</h2>
-                        <button class="btn" onclick="calculateMrps()">
+                        <button id="calculate-mrp-button" class="btn">
                             MRP (konsola)
                         </button>
                     </div>

@@ -8,6 +8,12 @@ document.getElementById("set-lead-time-input").value = mps.leadTime;
 document.getElementById("set-on-hand-input").value = mps.onHand;
 
 document
+    .getElementById("set-week-amount-form")
+    .addEventListener("submit", (event) => {
+        mps.setWeekAmount();
+        event.preventDefault();
+    });
+document
     .getElementById("set-lead-time-input")
     .addEventListener("input", debounce(mps.calculateMps, 400));
 document

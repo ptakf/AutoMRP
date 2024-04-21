@@ -1,4 +1,8 @@
-import { createHtmlElementFromString, createTableElement } from "./utils.js";
+import {
+    debounce,
+    createHtmlElementFromString,
+    createTableElement,
+} from "./utils.js";
 
 // MPS variables
 export var weekAmount = 10;
@@ -30,7 +34,7 @@ export function fillMpsTable() {
 
     for (let i = 0; i < weekAmount; i++) {
         // Fill Anticipated Demand row
-        document
+        let newInput = document
             .querySelector("table.mps-table tr.anticipated-row")
             .appendChild(document.createElement("td"))
             .appendChild(
@@ -39,16 +43,17 @@ export function fillMpsTable() {
                     class="w-100 text-center"
                     type="text"
                     pattern="^[1-9]\d*$"
-                    oninput="debounce(calculateMps, 400)()"
                     value="${anticipatedDemandList[i]}"
                     />
                 `)
             );
+
+        newInput.addEventListener("input", debounce(calculateMps, 400));
     }
 
     for (let i = 0; i < weekAmount; i++) {
         // Fill Production row
-        document
+        let newInput = document
             .querySelector("table.mps-table tr.production-row")
             .appendChild(document.createElement("td"))
             .appendChild(
@@ -57,11 +62,12 @@ export function fillMpsTable() {
                     class="w-100 text-center"
                     type="text"
                     pattern="^[1-9]\d*$"
-                    oninput="debounce(calculateMps, 400)()"
                     value="${productionList[i]}"
                     />
                 `)
             );
+
+        newInput.addEventListener("input", debounce(calculateMps, 400));
     }
 
     for (let i = 0; i < weekAmount; i++) {

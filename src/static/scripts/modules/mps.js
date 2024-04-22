@@ -1,25 +1,31 @@
+import { MpsCalculator } from "./MpsCalculator.js";
 import {
     createHtmlElementFromString,
     createTableElement,
     debounce,
 } from "./utils.js";
 
-// MPS variables
-export var weekAmount = 10;
-export var anticipatedDemandList = [];
-export var productionList = [];
-export var availableList = [];
-export var leadTime = 1;
-export var onHand = 0;
+export var mpsCalculator = new MpsCalculator();
 
 export function setWeekAmount() {
-    weekAmount = document.getElementById("set-week-amount-input").value;
+    mpsCalculator.setWeekAmount(
+        document.getElementById("set-week-amount-input").value
+    );
 
     createMpsTable();
 }
 
+export function fillMpsParameters() {
+    document.getElementById("set-week-amount-input").value =
+        mpsCalculator.getWeekAmount();
+    document.getElementById("set-lead-time-input").value =
+        mpsCalculator.getLeadTime();
+    document.getElementById("set-on-hand-input").value =
+        mpsCalculator.getOnHand();
+}
+
 function fillMpsTable() {
-    for (let i = 0; i < weekAmount; i++) {
+    for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         // Fill Week row
         document
             .querySelector("table.mps-table tr.week-row")
@@ -32,7 +38,7 @@ function fillMpsTable() {
             );
     }
 
-    for (let i = 0; i < weekAmount; i++) {
+    for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         // Fill Anticipated Demand row
         let newInput = document
             .querySelector("table.mps-table tr.anticipated-row")
@@ -43,7 +49,7 @@ function fillMpsTable() {
                     class="w-100 text-center"
                     type="text"
                     pattern="^[1-9]\d*$"
-                    value="${anticipatedDemandList[i]}"
+                    value="${mpsCalculator.getAnticipatedDemandList()[i]}"
                     />
                 `)
             );
@@ -51,7 +57,7 @@ function fillMpsTable() {
         newInput.addEventListener("input", debounce(calculateMps, 400));
     }
 
-    for (let i = 0; i < weekAmount; i++) {
+    for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         // Fill Production row
         let newInput = document
             .querySelector("table.mps-table tr.production-row")
@@ -62,7 +68,7 @@ function fillMpsTable() {
                     class="w-100 text-center"
                     type="text"
                     pattern="^[1-9]\d*$"
-                    value="${productionList[i]}"
+                    value="${mpsCalculator.getProductionList()[i]}"
                     />
                 `)
             );
@@ -70,12 +76,16 @@ function fillMpsTable() {
         newInput.addEventListener("input", debounce(calculateMps, 400));
     }
 
-    for (let i = 0; i < weekAmount; i++) {
+    for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         // Fill Available row
         document
             .querySelector("table.mps-table tr.available-row")
             .appendChild(
-                createTableElement("td", `${availableList[i]}`, "text-center")
+                createTableElement(
+                    "td",
+                    `${mpsCalculator.getAvailableList()[i]}`,
+                    "text-center"
+                )
             );
     }
 }
@@ -104,72 +114,57 @@ function resetMpsTable() {
         .replaceWith(createHtmlElementFromString(MpsTableTemplate));
 }
 
-function resizeLists() {
-    // Resize the lists according to the weekAmount variable. Fill empty slots with 0s
-    for (let array of [anticipatedDemandList, productionList, availableList]) {
-        while (weekAmount > array.length) {
-            array.push(0);
-        }
-
-        array.length = weekAmount;
-    }
-}
-
 function getVariablesFromInputs() {
     // Update variables with values from input elements
     // Update Lead Time and On Hand
-    leadTime = document.getElementById("set-lead-time-input").value;
-    onHand = document.getElementById("set-on-hand-input").value;
+    mpsCalculator.setLeadTime(
+        document.getElementById("set-lead-time-input").value
+    );
+    mpsCalculator.setOnHand(document.getElementById("set-on-hand-input").value);
 
     // Update Anticipated Demand list
     let anticipatedDemandInputElements = document.querySelectorAll(
         "table.mps-table tr.anticipated-row td input"
     );
 
-    for (let i = 0; i < weekAmount; i++) {
+    let anticipatedDemandList = [];
+    for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         anticipatedDemandList[i] = Number(
             anticipatedDemandInputElements[i].value
         );
     }
+
+    mpsCalculator.setAnticipatedDemandList(anticipatedDemandList);
 
     // Update Production list
     let productionInputElements = document.querySelectorAll(
         "table.mps-table tr.production-row td input"
     );
 
-    for (let i = 0; i < weekAmount; i++) {
+    let productionList = [];
+    for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         productionList[i] = Number(productionInputElements[i].value);
     }
+
+    mpsCalculator.setProductionList(productionList);
 }
 
 export function calculateMps() {
-    // Calculate product availability in the MPS
     getVariablesFromInputs();
-
-    for (let i = 0; i < weekAmount; i++) {
-        if (i == 0) {
-            availableList[i] =
-                onHand - anticipatedDemandList[i] + productionList[i];
-        } else {
-            availableList[i] =
-                availableList[i - 1] -
-                anticipatedDemandList[i] +
-                productionList[i];
-        }
-    }
+    mpsCalculator.calculateMps();
 
     // Update Available row
     let availableElements = document.querySelectorAll(
         "table.mps-table tr.available-row td"
     );
-    for (let i = 0; i < weekAmount; i++) {
+    for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         // Replace values in Available row
-        availableElements[i].innerText = availableList[i];
+        availableElements[i].innerText = mpsCalculator.getAvailableList()[i];
     }
 }
 
 export function createMpsTable() {
-    resizeLists();
+    mpsCalculator.resizeLists();
 
     resetMpsTable();
     fillMpsTable();

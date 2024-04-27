@@ -17,10 +17,10 @@ document
         event.preventDefault();
     });
 document
-    .getElementById("set-lead-time-input")
+    .getElementById("set-mps-lead-time-input")
     .addEventListener("input", debounce(calculateMps, 400));
 document
-    .getElementById("set-on-hand-input")
+    .getElementById("set-mps-on-hand-input")
     .addEventListener("input", debounce(calculateMps, 400));
 
 createMpsTable();

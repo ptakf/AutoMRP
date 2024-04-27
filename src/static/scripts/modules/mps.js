@@ -18,9 +18,9 @@ export function setWeekAmount() {
 export function fillMpsParameters() {
     document.getElementById("set-week-amount-input").value =
         mpsCalculator.getWeekAmount();
-    document.getElementById("set-lead-time-input").value =
+    document.getElementById("set-mps-lead-time-input").value =
         mpsCalculator.getLeadTime();
-    document.getElementById("set-on-hand-input").value =
+    document.getElementById("set-mps-on-hand-input").value =
         mpsCalculator.getOnHand();
 }
 
@@ -118,9 +118,9 @@ function getVariablesFromInputs() {
     // Update variables with values from input elements
     // Update Lead Time and On Hand
     mpsCalculator.setLeadTime(
-        document.getElementById("set-lead-time-input").value
+        document.getElementById("set-mps-lead-time-input").value
     );
-    mpsCalculator.setOnHand(document.getElementById("set-on-hand-input").value);
+    mpsCalculator.setOnHand(document.getElementById("set-mps-on-hand-input").value);
 
     // Update Anticipated Demand list
     let anticipatedDemandInputElements = document.querySelectorAll(

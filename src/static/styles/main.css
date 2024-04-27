@@ -9,27 +9,27 @@ footer {
     background-color: #3b49e7;
     text-align: center;
     color: #ffffff;
-    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1)
+    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
 footer {
-    box-shadow: -6px -6px 10px rgba(0, 0, 0, 0.1)
+    box-shadow: -6px -6px 10px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
     font-size: 36px;
 }
 
-#top-row {
+.top-row {
     margin-bottom: 20px;
 }
 
-#top-row  input{
+.top-row input {
     margin: 0 auto;
     width: 50%;
 }
 
-#top-row label{
+.top-row label {
     line-height: 200%;
 }
 
@@ -43,7 +43,7 @@ input {
     display: block;
 }
 
-input[type='number'] {
+input[type="number"] {
     .no-arrows::-webkit-outer-spin-button,
     .no-arrows::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -68,16 +68,21 @@ table .week-row th {
 
 table input {
     border: 1px solid grey;
-    border-radius: 8px !important
+    border-radius: 8px !important;
 }
 
-#bottom-row label {
+.bottom-row label {
     width: 20%;
     line-height: 200%;
 }
 
-#bottom-row input {
+.bottom-row input {
     width: 20%;
+}
+
+.bottom-row,
+.bottom-row .row {
+    row-gap: 10px;
 }
 
 @media only screen and (max-width: 920px) {
@@ -87,26 +92,22 @@ table input {
         font-weight: bold;
     }
 
-    #top-row  input{
+    .top-row input {
         height: 40px;
         margin-top: 12px;
         margin-right: 8px;
     }
-    
-    #top-row button{
+
+    .top-row button {
         height: 40px;
         margin-top: 12px;
     }
 
-    #bottom-row>div:first-child {
-        margin-bottom: 10px;
-    }
-
-    #bottom-row label {
+    .bottom-row label {
         width: 60%;
     }
 
-    #bottom-row input {
+    .bottom-row input {
         width: 40%;
     }
 }

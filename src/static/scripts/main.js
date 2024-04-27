@@ -4,7 +4,7 @@ import {
     fillMpsParameters,
     setWeekAmount,
 } from "./modules/mps.js";
-import { calculateMrps } from "./modules/mrp.js";
+import { calculateMrps, createMrpTables } from "./modules/mrp.js";
 import { debounce } from "./modules/utils.js";
 
 // Initialize MPS components
@@ -29,3 +29,5 @@ createMpsTable();
 document
     .getElementById("calculate-mrp-button")
     .addEventListener("click", calculateMrps);
+
+createMrpTables();

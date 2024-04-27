@@ -91,8 +91,8 @@ function fillMpsTable() {
 }
 
 function resetMpsTable() {
-    const MpsTableTemplate = `
-            <table
+    let mpsTableTemplate = `
+        <table
             class="mps-table table table-striped-columns table-bordered">
             <tr class="week-row">
                 <th>Week</th>
@@ -111,7 +111,7 @@ function resetMpsTable() {
 
     document
         .querySelector("table.mps-table")
-        .replaceWith(createHtmlElementFromString(MpsTableTemplate));
+        .replaceWith(createHtmlElementFromString(mpsTableTemplate));
 }
 
 function getVariablesFromInputs() {

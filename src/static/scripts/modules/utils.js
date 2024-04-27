@@ -22,3 +22,14 @@ export function createTableElement(tag = "td", innerText = "", className = "") {
 
     return tableElement;
 }
+
+export function generateId(idLength = 9) {
+    const characters = "01234567890abcdefghijklmnopqrstuvwxyz";
+
+    let id = "";
+    for (let i = 0; i < idLength; i++) {
+        id += characters.charAt(Math.random() * characters.length);
+    }
+
+    return id;
+}

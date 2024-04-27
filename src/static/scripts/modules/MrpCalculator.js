@@ -5,17 +5,17 @@ export class MrpCalculator {
         this.mpsCalculator = mpsCalculator;
     }
 
-    calculateMrp(higherBOM, lowerBOM) {
-        let onHand = lowerBOM.onHand;
-        let leadTime = lowerBOM.leadTime;
-        let lotSize = lowerBOM.lotSize;
+    calculateMrp(lowerBom, higherBom = { bomLevel: 0 }) {
+        let onHand = lowerBom.onHand;
+        let leadTime = lowerBom.leadTime;
+        let lotSize = lowerBom.lotSize;
 
         let grossRequirements = [];
-        if (higherBOM.BOMlevel == 0) {
+        if (higherBom.bomLevel == 0) {
             grossRequirements = this.mpsCalculator.productionList.slice(1); // Całkowite zapotrzebowanie
             grossRequirements.push(0);
         } else {
-            grossRequirements = higherBOM.plannedOrderReleases;
+            grossRequirements = higherBom.plannedOrderReleases;
         }
 
         let scheduledReceipts = []; // Planowane przyjęcia
@@ -58,21 +58,21 @@ export class MrpCalculator {
         }
 
         // TODO: Delete this:
-        console.log("------ " + lowerBOM.name + " ------");
-        console.log("Total demand:             ", grossRequirements.join(", "));
-        console.log("Planowane przyjęcia:      ", scheduledReceipts.join(", "));
-        console.log("Expected in stock:        ", projectedOnHand.join(", "));
-        console.log("Net demand:               ", netRequirements.join(", "));
-        console.log(
-            "Planned orders:           ",
-            plannedOrderReleases.join(", ")
-        );
-        console.log(
-            "Planned receipt of orders:",
-            plannedOrderReceipts.join(", ")
-        );
-        console.log("------------------------");
+        // console.log("------ " + lowerBom.name + " ------");
+        // console.log("Total demand:             ", grossRequirements.join(", "));
+        // console.log("Planowane przyjęcia:      ", scheduledReceipts.join(", "));
+        // console.log("Expected in stock:        ", projectedOnHand.join(", "));
+        // console.log("Net demand:               ", netRequirements.join(", "));
+        // console.log(
+        //     "Planned orders:           ",
+        //     plannedOrderReleases.join(", ")
+        // );
+        // console.log(
+        //     "Planned receipt of orders:",
+        //     plannedOrderReceipts.join(", ")
+        // );
+        // console.log("------------------------");
 
-        lowerBOM.plannedOrderReleases = plannedOrderReleases;
+        lowerBom.plannedOrderReleases = plannedOrderReleases;
     }
 }

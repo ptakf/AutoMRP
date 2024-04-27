@@ -12,6 +12,10 @@ footer {
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
+footer a {
+    color: #ffffff;
+}
+
 footer {
     box-shadow: -6px -6px 10px rgba(0, 0, 0, 0.1);
 }

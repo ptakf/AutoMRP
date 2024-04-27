@@ -1,83 +1,8 @@
-import { mpsCalculator } from "./mps.js";
-
-var shoe = {
-    BOMlevel: 0,
-};
-
-var shoeInsert = {
-    onHand: 22, // Aktualny stan zapasów
-    leadTime: 1, // Czas produkcji
-    lotSize: 50, // Rozmiar partii
-    BOMlevel: 1, // Poziom BOM
-    plannedOrderReleases: [], // ???
-    name: "Shoe Insert", // ???
-};
-
-var cardboard = {
-    onHand: 17,
-    leadTime: 2,
-    lotSize: 50,
-    BOMlevel: 2,
-    plannedOrderReleases: [],
-    name: "Cardboard",
-};
-
-var protectiveLayer = {
-    onHand: 43,
-    leadTime: 4,
-    lotSize: 50,
-    BOMlevel: 2,
-    plannedOrderReleases: [],
-    name: "Protective Layer",
-};
-
-var shoeLace = {
-    onHand: 8,
-    leadTime: 43,
-    lotSize: 50,
-    BOMlevel: 1,
-    plannedOrderReleases: [],
-    name: "Shoe Lace",
-};
-
-var incompleteShoe = {
-    onHand: 3,
-    leadTime: 3,
-    lotSize: 20,
-    BOMlevel: 1,
-    plannedOrderReleases: [],
-    name: "Incomplete Shoe",
-};
-
-var shoeSole = {
-    onHand: 24,
-    leadTime: 5,
-    lotSize: 20,
-    BOMlevel: 2,
-    plannedOrderReleases: [],
-    name: "Shoe sole",
-};
-
-var upperLayer = {
-    onHand: 13,
-    leadTime: 4,
-    lotSize: 20,
-    BOMlevel: 2,
-    plannedOrderReleases: [],
-    name: "Upper Layer",
-};
-
 export class MrpCalculator {
-    calculateMrps() {
-        this.calculateMrp(shoe, shoeInsert);
-        this.calculateMrp(shoeInsert, cardboard);
-        this.calculateMrp(shoeInsert, protectiveLayer);
+    mpsCalculator;
 
-        this.calculateMrp(shoe, shoeLace);
-
-        this.calculateMrp(shoe, incompleteShoe);
-        this.calculateMrp(incompleteShoe, shoeSole);
-        this.calculateMrp(incompleteShoe, upperLayer);
+    constructor(mpsCalculator) {
+        this.mpsCalculator = mpsCalculator;
     }
 
     calculateMrp(higherBOM, lowerBOM) {
@@ -87,18 +12,19 @@ export class MrpCalculator {
 
         let grossRequirements = [];
         if (higherBOM.BOMlevel == 0) {
-            grossRequirements = mpsCalculator.productionList.slice(1); // Całkowite zapotrzebowanie
+            grossRequirements = this.mpsCalculator.productionList.slice(1); // Całkowite zapotrzebowanie
             grossRequirements.push(0);
         } else {
             grossRequirements = higherBOM.plannedOrderReleases;
         }
+
         let scheduledReceipts = []; // Planowane przyjęcia
         let projectedOnHand = []; // Przewidywane na stanie
         let netRequirements = []; // Zapotrzebowanie netto
         let plannedOrderReleases = []; // Planowane zamówienia
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
 
-        for (let i = 0; i < mpsCalculator.weekAmount; i++) {
+        for (let i = 0; i < this.mpsCalculator.weekAmount; i++) {
             let netDemand = onHand - grossRequirements[i];
             let plannedOrders = 0;
 
@@ -131,6 +57,7 @@ export class MrpCalculator {
             plannedOrderReleases.push(plannedOrderReleases.shift());
         }
 
+        // TODO: Delete this:
         console.log("------ " + lowerBOM.name + " ------");
         console.log("Total demand:             ", grossRequirements.join(", "));
         console.log("Planowane przyjęcia:      ", scheduledReceipts.join(", "));

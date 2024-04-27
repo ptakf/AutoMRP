@@ -80,17 +80,17 @@ export class MrpCalculator {
         this.calculateMrp(incompleteShoe, upperLayer);
     }
 
-    calculateMrp(higerBOM, lowerBOM) {
+    calculateMrp(higherBOM, lowerBOM) {
         let onHand = lowerBOM.onHand;
         let leadTime = lowerBOM.leadTime;
         let lotSize = lowerBOM.lotSize;
 
         let grossRequirements = [];
-        if (higerBOM.BOMlevel == 0) {
+        if (higherBOM.BOMlevel == 0) {
             grossRequirements = mpsCalculator.productionList.slice(1); // Całkowite zapotrzebowanie
             grossRequirements.push(0);
         } else {
-            grossRequirements = higerBOM.plannedOrderReleases;
+            grossRequirements = higherBOM.plannedOrderReleases;
         }
         let scheduledReceipts = []; // Planowane przyjęcia
         let projectedOnHand = []; // Przewidywane na stanie

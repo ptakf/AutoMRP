@@ -68,11 +68,20 @@ section {
 
 table .week-row th {
     background-color: #697afd !important;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+table .week-row th:not(:first-child),
+table td,
+table input {
+    text-align: center;
 }
 
 table input {
     border: 1px solid grey;
     border-radius: 8px !important;
+    width: 100%;
 }
 
 .bottom-row label {

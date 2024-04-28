@@ -29,13 +29,7 @@ function fillMpsTable() {
         // Fill Week row
         document
             .querySelector("table.mps-table tr.week-row")
-            .appendChild(
-                createTableElement(
-                    "th",
-                    `${i + 1}`,
-                    "bg-primary text-light text-center fw-bold"
-                )
-            );
+            .appendChild(createTableElement("th", `${i + 1}`));
     }
 
     for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
@@ -46,9 +40,7 @@ function fillMpsTable() {
             .appendChild(
                 createHtmlElementFromString(`
                     <input
-                    class="w-100 text-center"
                     type="text"
-                    pattern="^[1-9]\d*$"
                     value="${mpsCalculator.getAnticipatedDemandList()[i]}"
                     />
                 `)
@@ -65,9 +57,7 @@ function fillMpsTable() {
             .appendChild(
                 createHtmlElementFromString(`
                     <input
-                    class="w-100 text-center"
                     type="text"
-                    pattern="^[1-9]\d*$"
                     value="${mpsCalculator.getProductionList()[i]}"
                     />
                 `)
@@ -83,8 +73,7 @@ function fillMpsTable() {
             .appendChild(
                 createTableElement(
                     "td",
-                    `${mpsCalculator.getAvailableList()[i]}`,
-                    "text-center"
+                    `${mpsCalculator.getAvailableList()[i]}`
                 )
             );
     }
@@ -120,7 +109,9 @@ function getVariablesFromInputs() {
     mpsCalculator.setLeadTime(
         document.getElementById("set-mps-lead-time-input").value
     );
-    mpsCalculator.setOnHand(document.getElementById("set-mps-on-hand-input").value);
+    mpsCalculator.setOnHand(
+        document.getElementById("set-mps-on-hand-input").value
+    );
 
     // Update Anticipated Demand list
     let anticipatedDemandInputElements = document.querySelectorAll(

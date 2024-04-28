@@ -1,81 +1,17 @@
 import { MrpCalculator } from "./MrpCalculator.js";
+import { componentDictionary } from "./components.js";
 import { mpsCalculator } from "./mps.js";
-import { createHtmlElementFromString, debounce } from "./utils.js";
+import { debounce } from "./utils.js";
 
 var mrpCalculator = new MrpCalculator(mpsCalculator);
-
-var components = {
-    shoeInsert: {
-        onHand: 22,
-        leadTime: 1,
-        lotSize: 50,
-        bomLevel: 1,
-        plannedOrderReleases: [],
-        name: "Shoe Insert",
-        id: "q63rn2978",
-    },
-    cardboard: {
-        onHand: 17,
-        leadTime: 2,
-        lotSize: 50,
-        bomLevel: 2,
-        plannedOrderReleases: [],
-        name: "Cardboard",
-        id: "g20sdtb4b",
-    },
-    protectiveLayer: {
-        onHand: 43,
-        leadTime: 4,
-        lotSize: 50,
-        bomLevel: 2,
-        plannedOrderReleases: [],
-        name: "Protective Layer",
-        id: "m0aao0u4v",
-    },
-    shoeLace: {
-        onHand: 8,
-        leadTime: 43,
-        lotSize: 50,
-        bomLevel: 1,
-        plannedOrderReleases: [],
-        name: "Shoe Lace",
-        id: "49shr93o5",
-    },
-    incompleteShoe: {
-        onHand: 3,
-        leadTime: 3,
-        lotSize: 20,
-        bomLevel: 1,
-        plannedOrderReleases: [],
-        name: "Incomplete Shoe",
-        id: "xdj4knm9w",
-    },
-    shoeSole: {
-        onHand: 24,
-        leadTime: 5,
-        lotSize: 20,
-        bomLevel: 2,
-        plannedOrderReleases: [],
-        name: "Shoe Sole",
-        id: "df00hwc1z",
-    },
-    upperLayer: {
-        onHand: 13,
-        leadTime: 4,
-        lotSize: 20,
-        bomLevel: 2,
-        plannedOrderReleases: [],
-        name: "Upper Layer",
-        id: "qo8dn00w9",
-    },
-};
+var components = componentDictionary;
 
 function resetMrpTable(component) {
-    // Create MRP part row
-    let mrpPartRow = document.createElement("div");
-    mrpPartRow.classList.add("row", `mrp-part-${component["id"]}`);
+    // Create MRP component row
+    let mrpComponentRow = document.createElement("div");
+    mrpComponentRow.classList.add("row", `mrp-component-${component["id"]}`);
 
-    // Create MRP part Title row
+    // Create MRP component Title row
     let titleRow = document.createElement("div");
     titleRow.classList.add("row", "top-row");
 
@@ -83,15 +19,15 @@ function resetMrpTable(component) {
     title.textContent = `${component["name"]} (BOM Level: ${component["bomLevel"]})`;
     titleRow.appendChild(title);
 
-    mrpPartRow.appendChild(titleRow);
+    mrpComponentRow.appendChild(titleRow);
 
-    // Create MRP part Table row
+    // Create MRP component Table row
     let tableElementRow = document.createElement("div");
     tableElementRow.classList.add("row");
 
     let tableElement = document.createElement("table");
     tableElement.classList.add(
-        "mrp-part-table",
+        "mrp-component-table",
         "table",
         "table-striped-columns",
         "table-bordered"
@@ -161,9 +97,9 @@ function resetMrpTable(component) {
     }
 
     tableElementRow.appendChild(tableElement);
-    mrpPartRow.appendChild(tableElementRow);
+    mrpComponentRow.appendChild(tableElementRow);
 
-    // Create MRP part Parameter Input row
+    // Create MRP component Parameter Input row
     let parameterInputRow = document.createElement("div");
     parameterInputRow.classList.add("row", "bottom-row");
 
@@ -197,28 +133,28 @@ function resetMrpTable(component) {
         parameterInputRow.appendChild(parameterColumn);
     }
 
-    mrpPartRow.appendChild(parameterInputRow);
+    mrpComponentRow.appendChild(parameterInputRow);
 
     // Append the MRP table to the document or replace the old MRP table
-    let queriedMrpPartRow = document.querySelector(
-        `.mrp-part-${component["id"]}`
+    let queriedMrpComponentRow = document.querySelector(
+        `.mrp-component-${component["id"]}`
     );
 
-    if (queriedMrpPartRow === null) {
-        document.querySelector(".mrp-parts-row").appendChild(mrpPartRow);
+    if (queriedMrpComponentRow === null) {
+        document.querySelector(".mrp-components-row").appendChild(mrpComponentRow);
     } else {
-        queriedMrpPartRow.replaceWith(mrpPartRow);
+        queriedMrpComponentRow.replaceWith(mrpComponentRow);
     }
 
     // Add event listeners to the MRP table's parameter inputs
     document
-        .querySelector(`.mrp-part-${component["id"]} #set-mrp-lead-time-input`)
+        .querySelector(`.mrp-component-${component["id"]} #set-mrp-lead-time-input`)
         .addEventListener("input", debounce(calculateMrps, 400));
     document
-        .querySelector(`.mrp-part-${component["id"]} #set-mrp-lot-size-input`)
+        .querySelector(`.mrp-component-${component["id"]} #set-mrp-lot-size-input`)
         .addEventListener("input", debounce(calculateMrps, 400));
     document
-        .querySelector(`.mrp-part-${component["id"]} #set-mrp-on-hand-input`)
+        .querySelector(`.mrp-component-${component["id"]} #set-mrp-on-hand-input`)
         .addEventListener("input", debounce(calculateMrps, 400));
 }
 

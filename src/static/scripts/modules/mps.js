@@ -9,11 +9,13 @@ export function setWeekAmount() {
     );
 }
 
-export function fillMpsParameters() {
+export function initializeMpsParameterInputs() {
     document.getElementById("set-week-amount-input").value =
         mpsCalculator.getWeekAmount();
+
     document.getElementById("set-mps-lead-time-input").value =
         mpsCalculator.getLeadTime();
+
     document.getElementById("set-mps-on-hand-input").value =
         mpsCalculator.getOnHand();
 }
@@ -21,12 +23,8 @@ export function fillMpsParameters() {
 function resetMpsTable() {
     // Create MPS table
     let mpsTable = document.createElement("table");
-    mpsTable.classList.add(
-        "mps-table",
-        "table",
-        "table-striped-columns",
-        "table-bordered"
-    );
+    mpsTable.classList.add("table", "table-striped-columns", "table-bordered");
+    mpsTable.setAttribute("id", "mps-table");
 
     let tableElementBody = document.createElement("tbody");
     mpsTable.appendChild(tableElementBody);
@@ -53,7 +51,7 @@ function resetMpsTable() {
     for (let tableRow in tableRows) {
         // Table row
         let tableRowElement = document.createElement("tr");
-        tableRowElement.classList.add(tableRows[tableRow]["id"]);
+        tableRowElement.setAttribute("id", tableRows[tableRow]["id"]);
 
         // Table header
         let tableRowElementHeader = document.createElement("th");
@@ -78,10 +76,6 @@ function resetMpsTable() {
 
                     let tableRowElementInput = document.createElement("input");
                     tableRowElementInput.setAttribute("type", "number");
-                    tableRowElementInput.addEventListener(
-                        "input",
-                        debounce(calculateMps, 400)
-                    );
 
                     if (tableRow === "anticipatedDemand") {
                         tableRowElementInput.setAttribute(
@@ -116,7 +110,7 @@ function resetMpsTable() {
     }
 
     // Replace the old MPS table
-    document.querySelector("table.mps-table").replaceWith(mpsTable);
+    document.querySelector("table#mps-table").replaceWith(mpsTable);
 }
 
 function getVariablesFromInputs() {
@@ -131,7 +125,7 @@ function getVariablesFromInputs() {
 
     // Update Anticipated Demand list
     let anticipatedDemandInputElements = document.querySelectorAll(
-        "table.mps-table tr.anticipated-row td input"
+        "table#mps-table tr#anticipated-row td input"
     );
 
     let anticipatedDemandList = [];
@@ -145,7 +139,7 @@ function getVariablesFromInputs() {
 
     // Update Production list
     let productionInputElements = document.querySelectorAll(
-        "table.mps-table tr.production-row td input"
+        "table#mps-table tr#production-row td input"
     );
 
     let productionList = [];
@@ -162,11 +156,11 @@ export function calculateMps() {
 
     // Update Available row
     let availableElements = document.querySelectorAll(
-        "table.mps-table tr.available-row td"
+        "table#mps-table tr#available-row td"
     );
     for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         // Replace values in Available row
-        availableElements[i].innerText = mpsCalculator.getAvailableList()[i];
+        availableElements[i].textContent = mpsCalculator.getAvailableList()[i];
     }
 }
 

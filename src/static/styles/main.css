@@ -66,13 +66,13 @@ section {
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
-table .week-row th {
+table #week-row th {
     background-color: #697afd !important;
     color: #ffffff;
     font-weight: bold;
 }
 
-table .week-row th:not(:first-child),
+table #week-row th:not(:first-child),
 table td,
 table input {
     text-align: center;

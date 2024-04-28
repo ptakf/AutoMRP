@@ -1,14 +1,15 @@
 export var componentDictionary = {
-    shoeInsert: {
+    q63rn2978: {
         onHand: 22,
         leadTime: 1,
         lotSize: 50,
         bomLevel: 1,
         plannedOrderReleases: [],
-        name: "Shoe Insert",
+        name: "Insole",
         id: "q63rn2978",
+        parent: null,
     },
-    cardboard: {
+    g20sdtb4b: {
         onHand: 17,
         leadTime: 2,
         lotSize: 50,
@@ -16,8 +17,9 @@ export var componentDictionary = {
         plannedOrderReleases: [],
         name: "Cardboard",
         id: "g20sdtb4b",
+        parent: "q63rn2978",
     },
-    protectiveLayer: {
+    m0aao0u4v: {
         onHand: 43,
         leadTime: 4,
         lotSize: 50,
@@ -25,6 +27,7 @@ export var componentDictionary = {
         plannedOrderReleases: [],
         name: "Protective Layer",
         id: "m0aao0u4v",
+        parent: "q63rn2978",
     },
     shoeLace: {
         onHand: 8,
@@ -32,34 +35,38 @@ export var componentDictionary = {
         lotSize: 50,
         bomLevel: 1,
         plannedOrderReleases: [],
-        name: "Shoe Lace",
+        name: "Shoelace",
         id: "49shr93o5",
+        parent: null,
     },
-    incompleteShoe: {
+    xdj4knm9w: {
         onHand: 3,
         leadTime: 3,
         lotSize: 20,
         bomLevel: 1,
         plannedOrderReleases: [],
-        name: "Incomplete Shoe",
+        name: "Empty Shoe",
         id: "xdj4knm9w",
+        parent: null,
     },
-    shoeSole: {
+    df00hwc1z: {
         onHand: 24,
         leadTime: 5,
         lotSize: 20,
         bomLevel: 2,
         plannedOrderReleases: [],
-        name: "Shoe Sole",
+        name: "Sole",
         id: "df00hwc1z",
+        parent: "xdj4knm9w",
     },
-    upperLayer: {
+    qo8dn00w9: {
         onHand: 13,
         leadTime: 4,
         lotSize: 20,
         bomLevel: 2,
         plannedOrderReleases: [],
-        name: "Upper Layer",
+        name: "Top Shoe Layer",
         id: "qo8dn00w9",
+        parent: "xdj4knm9w",
     },
 };

@@ -84,5 +84,14 @@ export class MpsCalculator {
                     this.productionList[i];
             }
         }
+
+        return {
+            weekAmount: this.weekAmount,
+            anticipatedDemandList: this.anticipatedDemandList,
+            productionList: this.productionList,
+            availableList: this.availableList,
+            leadTime: this.leadTime,
+            onHand: this.onHand,
+        };
     }
 }

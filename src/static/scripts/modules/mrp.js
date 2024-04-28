@@ -6,10 +6,42 @@ import { debounce } from "./utils.js";
 var mrpCalculator = new MrpCalculator(mpsCalculator);
 var components = componentDictionary;
 
+var mrpTableRows = {
+    week: {
+        name: "Week",
+        id: "week-row",
+    },
+    grossRequirements: {
+        name: "Gross Requirements",
+        id: "gross-requirements-row",
+    },
+    scheduledReceipts: {
+        name: "Scheduled Receipts",
+        id: "scheduled-receipts-row",
+    },
+    projectedOnHand: {
+        name: "Projected on Hand",
+        id: "projected-on-hand-row",
+    },
+    netRequirements: {
+        name: "Net Requirements",
+        id: "net-requirements-row",
+    },
+    plannedOrderReleases: {
+        name: "Planned Order Releases",
+        id: "planned-order-releases-row",
+    },
+    plannedOrderReceipts: {
+        name: "Planned Order Receipts",
+        id: "planned-order-receipts-row",
+    },
+};
+
 function resetMrpTable(component) {
     // Create MRP component row
     let mrpComponentRow = document.createElement("div");
-    mrpComponentRow.classList.add("row", `mrp-component-${component["id"]}`);
+    mrpComponentRow.classList.add("row");
+    mrpComponentRow.setAttribute("id", `mrp-component-${component["id"]}`);
 
     // Create MRP component Title row
     let titleRow = document.createElement("div");
@@ -36,51 +68,20 @@ function resetMrpTable(component) {
     let tableElementBody = document.createElement("tbody");
     tableElement.appendChild(tableElementBody);
 
-    let tableRows = {
-        week: {
-            name: "Week",
-            id: "week-row",
-        },
-        grossRequirements: {
-            name: "Gross Requirements",
-            id: "gross-requirements-row",
-        },
-        scheduledReceipts: {
-            name: "Scheduled Receipts",
-            id: "scheduled-receipts-row",
-        },
-        projectedOnHand: {
-            name: "Projected on Hand",
-            id: "projected-on-hand-row",
-        },
-        netRequirements: {
-            name: "Net Requirements",
-            id: "net-requirements-row",
-        },
-        plannedOrderReleases: {
-            name: "Planned Order Releases",
-            id: "planned-order-releases-row",
-        },
-        plannedOrderReceipts: {
-            name: "Planned Order Receipts",
-            id: "planned-order-receipts-row",
-        },
-    };
-
-    for (let tableRow in tableRows) {
+    for (let tableRow in mrpTableRows) {
         // Table row
         let tableRowElement = document.createElement("tr");
-        tableRowElement.classList.add(tableRows[tableRow]["id"]);
+        tableRowElement.setAttribute("id", mrpTableRows[tableRow]["id"]);
 
         // Table header
         let tableRowElementHeader = document.createElement("th");
-        tableRowElementHeader.textContent = tableRows[tableRow]["name"];
+        tableRowElementHeader.textContent = mrpTableRows[tableRow]["name"];
 
         tableRowElement.appendChild(tableRowElementHeader);
 
         // Table data
         for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
-            if (tableRows[tableRow] === tableRows["week"]) {
+            if (mrpTableRows[tableRow] === mrpTableRows["week"]) {
                 let tableRowElementData = document.createElement("th");
                 tableRowElementData.textContent = i + 1;
 
@@ -137,52 +138,55 @@ function resetMrpTable(component) {
 
     // Append the MRP table to the document or replace the old MRP table
     let queriedMrpComponentRow = document.querySelector(
-        `.mrp-component-${component["id"]}`
+        `#mrp-component-${component["id"]}`
     );
 
     if (queriedMrpComponentRow === null) {
-        document.querySelector(".mrp-components-row").appendChild(mrpComponentRow);
+        document
+            .querySelector(".mrp-components-row")
+            .appendChild(mrpComponentRow);
     } else {
         queriedMrpComponentRow.replaceWith(mrpComponentRow);
     }
-
-    // Add event listeners to the MRP table's parameter inputs
-    document
-        .querySelector(`.mrp-component-${component["id"]} #set-mrp-lead-time-input`)
-        .addEventListener("input", debounce(calculateMrps, 400));
-    document
-        .querySelector(`.mrp-component-${component["id"]} #set-mrp-lot-size-input`)
-        .addEventListener("input", debounce(calculateMrps, 400));
-    document
-        .querySelector(`.mrp-component-${component["id"]} #set-mrp-on-hand-input`)
-        .addEventListener("input", debounce(calculateMrps, 400));
 }
 
 export function calculateMrps() {
-    mrpCalculator.calculateMrp(components["shoeInsert"]);
-    mrpCalculator.calculateMrp(
-        components["cardboard"],
-        components["shoeInsert"]
-    );
-    mrpCalculator.calculateMrp(["protectiveLayer"], components["shoeInsert"]);
+    for (let component in components) {
+        let mrpComponentTable = document.querySelector(
+            `.mrp-components-row #mrp-component-${components[component]["id"]} .mrp-component-table tbody`
+        );
 
-    mrpCalculator.calculateMrp(components["shoeLace"]);
+        let calculations = mrpCalculator.calculateMrp(
+            components[component],
+            components[components[component]["parent"]]
+        );
 
-    mrpCalculator.calculateMrp(components["incompleteShoe"]);
-    mrpCalculator.calculateMrp(
-        components["shoeSole"],
-        components["incompleteShoe"]
-    );
-    mrpCalculator.calculateMrp(
-        components["upperLayer"],
-        components["incompleteShoe"]
-    );
+        for (let tableRow of mrpComponentTable.childNodes) {
+            if (tableRow.id !== "week-row") {
+                let tableRowId = Object.keys(mrpTableRows).find(
+                    (key) => mrpTableRows[key].id == tableRow.id
+                );
+
+                let tableCells = tableRow.getElementsByTagName("td");
+                for (let i = 0; i < tableCells.length; i++) {
+                    tableCells[i].textContent = calculations[tableRowId][i];
+
+                    // TODO: This is the last resort if there is not enough time to change the MRP algorithm.
+                    // Without this, there are empty cells in MRP tables
+                    // if (calculations[tableRowId][i] != null) {
+                    //     tableCells[i].textContent = calculations[tableRowId][i];
+                    // } else {
+                    //     tableCells[i].textContent = 0
+                    // }
+                }
+            }
+        }
+    }
 }
 
 export function createMrpTables() {
     for (let component in components) {
         resetMrpTable(components[component]);
-        break; // TODO: remove this
     }
 
     calculateMrps();

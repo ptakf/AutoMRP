@@ -10,19 +10,35 @@ export class MrpCalculator {
         let leadTime = lowerBom.leadTime;
         let lotSize = lowerBom.lotSize;
 
-        let grossRequirements = [];
+        let scheduledReceipts = []; // Planowane przyjęcia
+        let projectedOnHand = []; // Przewidywane na stanie
+        let netRequirements = []; // Zapotrzebowanie netto
+        let plannedOrderReleases = []; // Planowane zamówienia
+        let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
+        let grossRequirements = []; // Całkowite zapotrzebowanie
+
+        // // Resize the lists according to the weekAmount variable. Fill empty slots with 0s
+        // for (let array of [
+        //     scheduledReceipts,
+        //     projectedOnHand,
+        //     netRequirements,
+        //     plannedOrderReleases,
+        //     plannedOrderReceipts,
+        //     grossRequirements,
+        // ]) {
+        //     while (this.mpsCalculator.weekAmount > array.length) {
+        //         array.push(0);
+        //     }
+
+        //     array.length = this.mpsCalculator.weekAmount;
+        // }
+
         if (higherBom.bomLevel == 0) {
             grossRequirements = this.mpsCalculator.productionList.slice(1); // Całkowite zapotrzebowanie
             grossRequirements.push(0);
         } else {
             grossRequirements = higherBom.plannedOrderReleases;
         }
-
-        let scheduledReceipts = []; // Planowane przyjęcia
-        let projectedOnHand = []; // Przewidywane na stanie
-        let netRequirements = []; // Zapotrzebowanie netto
-        let plannedOrderReleases = []; // Planowane zamówienia
-        let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
 
         for (let i = 0; i < this.mpsCalculator.weekAmount; i++) {
             let netDemand = onHand - grossRequirements[i];
@@ -57,22 +73,15 @@ export class MrpCalculator {
             plannedOrderReleases.push(plannedOrderReleases.shift());
         }
 
-        // TODO: Delete this:
-        // console.log("------ " + lowerBom.name + " ------");
-        // console.log("Total demand:             ", grossRequirements.join(", "));
-        // console.log("Planowane przyjęcia:      ", scheduledReceipts.join(", "));
-        // console.log("Expected in stock:        ", projectedOnHand.join(", "));
-        // console.log("Net demand:               ", netRequirements.join(", "));
-        // console.log(
-        //     "Planned orders:           ",
-        //     plannedOrderReleases.join(", ")
-        // );
-        // console.log(
-        //     "Planned receipt of orders:",
-        //     plannedOrderReceipts.join(", ")
-        // );
-        // console.log("------------------------");
-
         lowerBom.plannedOrderReleases = plannedOrderReleases;
+
+        return {
+            grossRequirements: grossRequirements,
+            scheduledReceipts: scheduledReceipts,
+            projectedOnHand: projectedOnHand,
+            netRequirements: netRequirements,
+            plannedOrderReleases: plannedOrderReleases,
+            plannedOrderReceipts: plannedOrderReceipts,
+        };
     }
 }

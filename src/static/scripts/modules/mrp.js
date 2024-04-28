@@ -71,11 +71,11 @@ var components = {
 };
 
 function resetMrpTable(component) {
-    // Create MRP table
-    let mrpTable = document.createElement("table");
-    mrpTable.classList.add("row", `mrp-part-${component["id"]}`);
+    // Create MRP part row
+    let mrpPartRow = document.createElement("div");
+    mrpPartRow.classList.add("row", `mrp-part-${component["id"]}`);
 
-    // Create Title row
+    // Create MRP part Title row
     let titleRow = document.createElement("div");
     titleRow.classList.add("row", "top-row");
 
@@ -83,9 +83,9 @@ function resetMrpTable(component) {
     title.textContent = `${component["name"]} (BOM Level: ${component["bomLevel"]})`;
     titleRow.appendChild(title);
 
-    mrpTable.appendChild(titleRow);
+    mrpPartRow.appendChild(titleRow);
 
-    // Create Table row
+    // Create MRP part Table row
     let tableElementRow = document.createElement("div");
     tableElementRow.classList.add("row");
 
@@ -132,16 +132,17 @@ function resetMrpTable(component) {
     };
 
     for (let tableRow in tableRows) {
+        // Table row
         let tableRowElement = document.createElement("tr");
         tableRowElement.classList.add(tableRows[tableRow]["id"]);
 
-        // Table Header
+        // Table header
         let tableRowElementHeader = document.createElement("th");
         tableRowElementHeader.textContent = tableRows[tableRow]["name"];
 
         tableRowElement.appendChild(tableRowElementHeader);
 
-        // Table Data
+        // Table data
         for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
             if (tableRows[tableRow] === tableRows["week"]) {
                 let tableRowElementData = document.createElement("th");
@@ -160,9 +161,9 @@ function resetMrpTable(component) {
     }
 
     tableElementRow.appendChild(tableElement);
-    mrpTable.appendChild(tableElementRow);
+    mrpPartRow.appendChild(tableElementRow);
 
-    // Create Parameter Input row
+    // Create MRP part Parameter Input row
     let parameterInputRow = document.createElement("div");
     parameterInputRow.classList.add("row", "bottom-row");
 
@@ -196,17 +197,17 @@ function resetMrpTable(component) {
         parameterInputRow.appendChild(parameterColumn);
     }
 
-    mrpTable.appendChild(parameterInputRow);
+    mrpPartRow.appendChild(parameterInputRow);
 
-    // Append MRP table to the document or replace old MRP table with the new one
-    let queriedMrpTable = document.querySelector(
+    // Append the MRP table to the document or replace the old MRP table
+    let queriedMrpPartRow = document.querySelector(
         `.mrp-part-${component["id"]}`
     );
 
-    if (queriedMrpTable === null) {
-        document.querySelector(".mrp-parts-row").appendChild(mrpTable);
+    if (queriedMrpPartRow === null) {
+        document.querySelector(".mrp-parts-row").appendChild(mrpPartRow);
     } else {
-        queriedMrpTable.replaceWith(mrpTable);
+        queriedMrpPartRow.replaceWith(mrpPartRow);
     }
 
     // Add event listeners to the MRP table's parameter inputs

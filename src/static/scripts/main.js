@@ -14,6 +14,10 @@ document
     .getElementById("set-week-amount-form")
     .addEventListener("submit", (event) => {
         setWeekAmount();
+
+        createMpsTable();
+        createMrpTables();
+
         event.preventDefault();
     });
 document

@@ -9,7 +9,7 @@
 
 ***
 
-AutoMRP is an MPS and MRP schedule calculator for products with an uncomplicated BOM.
+AutoMRP is a Master Production Schedule (MPS) and Material Requirements Planning (MRP) schedule calculator.
 
 You can try it at: https://ptakf-uek.github.io/AutoMRP
 

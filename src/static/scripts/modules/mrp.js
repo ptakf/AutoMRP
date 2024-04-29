@@ -37,6 +37,12 @@ var mrpTableRows = {
     },
 };
 
+var mrpTableParameterInputs = {
+    leadTime: { name: "Lead Time", id: "set-mrp-lead-time-input" },
+    lotSize: { name: "Lot Size", id: "set-mrp-lot-size-input" },
+    onHand: { name: "On Hand", id: "set-mrp-on-hand-input" },
+};
+
 function resetMrpTable(component) {
     // Create MRP component row
     let mrpComponentRow = document.createElement("div");
@@ -104,26 +110,26 @@ function resetMrpTable(component) {
     let parameterInputRow = document.createElement("div");
     parameterInputRow.classList.add("row", "bottom-row");
 
-    let parameters = {
-        leadTime: { name: "Lead Time", id: "set-mrp-lead-time-input" },
-        lotSize: { name: "Lot Size", id: "set-mrp-lot-size-input" },
-        onHand: { name: "On Hand", id: "set-mrp-on-hand-input" },
-    };
-
-    for (let parameter in parameters) {
+    for (let parameter in mrpTableParameterInputs) {
         let parameterColumn = document.createElement("div");
         parameterColumn.classList.add("col-sm-4", "d-inline-flex");
 
         // Parameter label
         let parameterLabel = document.createElement("label");
-        parameterLabel.setAttribute("for", parameters[parameter]["id"]);
-        parameterLabel.textContent = parameters[parameter]["name"];
+        parameterLabel.setAttribute(
+            "for",
+            mrpTableParameterInputs[parameter]["id"]
+        );
+        parameterLabel.textContent = mrpTableParameterInputs[parameter]["name"];
 
         parameterColumn.appendChild(parameterLabel);
 
         // Parameter input
         let parameterInput = document.createElement("input");
-        parameterInput.setAttribute("id", parameters[parameter]["id"]);
+        parameterInput.setAttribute(
+            "id",
+            mrpTableParameterInputs[parameter]["id"]
+        );
         parameterInput.setAttribute("type", "number");
         parameterInput.setAttribute("value", `${component[parameter]}`);
         parameterInput.classList.add("form-control");
@@ -150,18 +156,39 @@ function resetMrpTable(component) {
     }
 }
 
-export function calculateMrps() {
+function getVariablesFromInputs() {
+    // Update component parameter values with new values from input elements
     for (let component in components) {
-        let mrpComponentTable = document.querySelector(
-            `.mrp-components-row #mrp-component-${components[component]["id"]} .mrp-component-table tbody`
+        let mrpComponentParameterInputs = document.querySelectorAll(
+            `.mrp-components-row #mrp-component-${components[component]["id"]} .bottom-row input`
         );
 
+        for (let parameterInput of mrpComponentParameterInputs) {
+            let parameterInputId = Object.keys(mrpTableParameterInputs).find(
+                (key) => mrpTableParameterInputs[key].id == parameterInput.id
+            );
+
+            components[component][parameterInputId] = Number(
+                parameterInput.value
+            );
+        }
+    }
+}
+
+export function calculateMrps() {
+    getVariablesFromInputs();
+
+    for (let component in components) {
         let calculations = mrpCalculator.calculateMrp(
             components[component],
-            components[components[component]["parent"]]
+            components[components[component]["parentId"]]
         );
 
-        for (let tableRow of mrpComponentTable.childNodes) {
+        let mrpComponentTableRows = document.querySelectorAll(
+            `.mrp-components-row #mrp-component-${components[component]["id"]} .mrp-component-table tbody tr`
+        );
+
+        for (let tableRow of mrpComponentTableRows) {
             if (tableRow.id !== "week-row") {
                 let tableRowId = Object.keys(mrpTableRows).find(
                     (key) => mrpTableRows[key].id == tableRow.id

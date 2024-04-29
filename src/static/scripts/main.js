@@ -27,10 +27,11 @@ document
         event.preventDefault();
     });
 
-createMpsTable();
-
-for (let inputElement of document.getElementsByTagName("input")) {
-    inputElement.addEventListener(
+for (let inputElementId of [
+    "set-mps-lead-time-input",
+    "set-mps-on-hand-input",
+]) {
+    document.getElementById(inputElementId).addEventListener(
         "input",
         debounce(() => {
             calculateMps();
@@ -38,6 +39,8 @@ for (let inputElement of document.getElementsByTagName("input")) {
         }, 400)
     );
 }
+
+createMpsTable();
 
 document
     .getElementById("load-configuration-input")

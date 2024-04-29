@@ -1,4 +1,6 @@
 import { MpsCalculator } from "./MpsCalculator.js";
+import { calculateMrps } from "./mrp.js";
+import { debounce } from "./utils.js";
 
 export var mpsCalculator = new MpsCalculator();
 
@@ -75,6 +77,13 @@ function resetMpsTable() {
 
                     let tableRowElementInput = document.createElement("input");
                     tableRowElementInput.setAttribute("type", "number");
+                    tableRowElementInput.addEventListener(
+                        "input",
+                        debounce(() => {
+                            calculateMps();
+                            calculateMrps();
+                        }, 400)
+                    );
 
                     if (tableRow === "anticipatedDemand") {
                         tableRowElementInput.setAttribute(

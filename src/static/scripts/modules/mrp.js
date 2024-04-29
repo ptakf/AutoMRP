@@ -1,6 +1,7 @@
 import { MrpCalculator } from "./MrpCalculator.js";
 import { exampleComponents } from "./exampleComponents.js";
-import { mpsCalculator } from "./mps.js";
+import { calculateMps, mpsCalculator } from "./mps.js";
+import { debounce } from "./utils.js";
 
 var mrpCalculator = new MrpCalculator(mpsCalculator);
 var componentDictionary = {};
@@ -52,6 +53,7 @@ export function loadComponentsFromFile(componentsFile) {
             componentDictionary = JSON.parse(response);
 
             createMrpTables(componentDictionary);
+            return componentDictionary;
         }
     });
 }
@@ -156,6 +158,13 @@ function resetMrpTable(component) {
         parameterInput.setAttribute("type", "number");
         parameterInput.setAttribute("value", `${component[parameter]}`);
         parameterInput.classList.add("form-control");
+        parameterInput.addEventListener(
+            "input",
+            debounce(() => {
+                calculateMps();
+                calculateMrps();
+            }, 400)
+        );
 
         parameterColumn.appendChild(parameterInput);
 

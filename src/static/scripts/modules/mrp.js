@@ -262,6 +262,15 @@ export function calculateMrps() {
                             calculations[tableRowId][i];
                     } else {
                         tableCells[i].textContent = calculations[tableRowId][i];
+
+                        // Toggle highlighting cells with negative values
+                        if (tableCells[i].textContent < 0) {
+                            tableCells[i].style.backgroundColor = "#dc3545";
+                            tableCells[i].style.color = "#f8f9fa";
+                            tableCells[i].style.fontWeight = "bold";
+                        } else {
+                            tableCells[i].removeAttribute("style");
+                        }
                     }
                 }
             }

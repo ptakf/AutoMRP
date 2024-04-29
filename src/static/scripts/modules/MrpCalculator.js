@@ -5,17 +5,17 @@ export class MrpCalculator {
         this.mpsCalculator = mpsCalculator;
     }
 
-    // resizeList(list) {
-    //     // Resize the list passed as an argument according to the weekAmount variable.
-    //     // Fill empty slots with 0s
-    //     while (this.mpsCalculator.weekAmount > list.length) {
-    //         list.push(0);
-    //     }
+    resizeList(list) {
+        // Resize the list passed as an argument according to the weekAmount variable.
+        // Fill empty slots with 0s
+        while (this.mpsCalculator.weekAmount > list.length) {
+            list.push(0);
+        }
 
-    //     list.length = this.mpsCalculator.weekAmount;
+        list.length = this.mpsCalculator.weekAmount;
 
-    //     return list;
-    // }
+        return list;
+    }
 
     calculateMrp(lowerBom, higherBom = { bomLevel: 0 }) {
         let onHand = lowerBom.onHand;
@@ -29,7 +29,7 @@ export class MrpCalculator {
         let plannedOrderReleases = []; // Planowane zamówienia
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
 
-        // this.resizeList(scheduledReceipts);
+        this.resizeList(scheduledReceipts);
 
         if (higherBom.bomLevel == 0) {
             grossRequirements = this.mpsCalculator.productionList.slice(1);

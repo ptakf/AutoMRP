@@ -60,5 +60,5 @@ document
     .addEventListener("click", saveComponentsToFile);
 
 // Uncomment next two lines to load example components on start:
-loadExampleComponents();
-createMrpTables();
+// loadExampleComponents();
+// createMrpTables();

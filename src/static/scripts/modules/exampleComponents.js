@@ -1,4 +1,4 @@
-export var componentDictionary = {
+export var exampleComponents = {
     q63rn2978: {
         onHand: 22,
         leadTime: 1,

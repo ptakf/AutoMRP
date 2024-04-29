@@ -1,5 +1,4 @@
 import { MpsCalculator } from "./MpsCalculator.js";
-import { debounce } from "./utils.js";
 
 export var mpsCalculator = new MpsCalculator();
 

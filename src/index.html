@@ -22,6 +22,36 @@
         <div class="container">
             <section>
                 <div class="row">
+                    <div class="col-md-6">
+                        <h2>Load Configuration From File</h2>
+
+                        <input
+                            id="load-configuration-input"
+                            type="file"
+                            class="form-control"
+                        />
+
+                        <button
+                            id="load-example-configuration-button"
+                            class="btn"
+                            type="button"
+                        >
+                            Load Example Components
+                        </button>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h2>Save Configuration to File</h2>
+
+                        <a id="save-configuration-button">
+                            <button class="btn" type="button">Save</button>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="row">
                     <div class="col-md-8">
                         <h2>MPS</h2>
                     </div>
@@ -74,7 +104,12 @@
                     <h2>MRP</h2>
                 </div>
 
-                <div class="row mrp-components-row"></div>
+                <div class="row mrp-components-row">
+                    <h5 class="fst-italic">
+                        Add an MRP table or load a configuration file to begin
+                        calculations...
+                    </h5>
+                </div>
             </section>
         </div>
     </main>

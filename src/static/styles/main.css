@@ -98,6 +98,14 @@ table input {
     row-gap: 10px;
 }
 
+.error {
+    color: #dc3545;
+}
+
+.display-none {
+    display: none;
+}
+
 @media only screen and (max-width: 920px) {
     section h2 {
         text-align: center;

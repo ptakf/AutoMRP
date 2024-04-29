@@ -1,10 +1,9 @@
 import { MrpCalculator } from "./MrpCalculator.js";
-import { componentDictionary } from "./components.js";
+import { exampleComponents } from "./exampleComponents.js";
 import { mpsCalculator } from "./mps.js";
-import { debounce } from "./utils.js";
 
 var mrpCalculator = new MrpCalculator(mpsCalculator);
-var components = componentDictionary;
+var componentDictionary = {};
 
 var mrpTableRows = {
     week: {
@@ -42,6 +41,30 @@ var mrpTableParameterInputs = {
     lotSize: { name: "Lot Size", id: "set-mrp-lot-size-input" },
     onHand: { name: "On Hand", id: "set-mrp-on-hand-input" },
 };
+
+export function loadExampleComponents() {
+    componentDictionary = exampleComponents;
+}
+
+export function loadComponentsFromFile(componentsFile) {
+    componentsFile.text().then((response) => {
+        if (response != "") {
+            componentDictionary = JSON.parse(response);
+
+            createMrpTables(componentDictionary);
+        }
+    });
+}
+
+export function saveComponentsToFile() {
+    let button = document.getElementById("save-configuration-button");
+    button.href = URL.createObjectURL(
+        new Blob([JSON.stringify(componentDictionary)], {
+            type: "text/json",
+        })
+    );
+    button.download = "components.json";
+}
 
 function resetMrpTable(component) {
     // Create MRP component row
@@ -158,9 +181,9 @@ function resetMrpTable(component) {
 
 function getVariablesFromInputs() {
     // Update component parameter values with new values from input elements
-    for (let component in components) {
+    for (let component in componentDictionary) {
         let mrpComponentParameterInputs = document.querySelectorAll(
-            `.mrp-components-row #mrp-component-${components[component]["id"]} .bottom-row input`
+            `.mrp-components-row #mrp-component-${componentDictionary[component]["id"]} .bottom-row input`
         );
 
         for (let parameterInput of mrpComponentParameterInputs) {
@@ -168,7 +191,7 @@ function getVariablesFromInputs() {
                 (key) => mrpTableParameterInputs[key].id == parameterInput.id
             );
 
-            components[component][parameterInputId] = Number(
+            componentDictionary[component][parameterInputId] = Number(
                 parameterInput.value
             );
         }
@@ -178,14 +201,14 @@ function getVariablesFromInputs() {
 export function calculateMrps() {
     getVariablesFromInputs();
 
-    for (let component in components) {
+    for (let component in componentDictionary) {
         let calculations = mrpCalculator.calculateMrp(
-            components[component],
-            components[components[component]["parentId"]]
+            componentDictionary[component],
+            componentDictionary[componentDictionary[component]["parentId"]]
         );
 
         let mrpComponentTableRows = document.querySelectorAll(
-            `.mrp-components-row #mrp-component-${components[component]["id"]} .mrp-component-table tbody tr`
+            `.mrp-components-row #mrp-component-${componentDictionary[component]["id"]} .mrp-component-table tbody tr`
         );
 
         for (let tableRow of mrpComponentTableRows) {
@@ -211,7 +234,10 @@ export function calculateMrps() {
     }
 }
 
-export function createMrpTables() {
+export function createMrpTables(components = componentDictionary) {
+    // Remove old MRP tables
+    document.querySelector("div.mrp-components-row").innerHTML = "";
+
     for (let component in components) {
         resetMrpTable(components[component]);
     }

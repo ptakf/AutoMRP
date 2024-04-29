@@ -60,19 +60,18 @@ function resetMpsTable() {
 
         // Table data
         for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
-            switch (tableRow) {
-                case "week": {
-                    let tableRowElementData = document.createElement("th");
-                    tableRowElementData.textContent = i + 1;
+            if (tableRow === "week") {
+                let tableRowElementData = document.createElement("th");
+                tableRowElementData.textContent = i + 1;
 
-                    tableRowElement.appendChild(tableRowElementData);
-                    break;
-                }
+                tableRowElement.appendChild(tableRowElementData);
+            } else {
+                let tableRowElementData = document.createElement("td");
 
-                case "anticipatedDemand":
-                case "production": {
-                    let tableRowElementData = document.createElement("td");
-
+                if (tableRow === "available") {
+                    tableRowElementData.textContent =
+                        mpsCalculator.getAvailableList()[i];
+                } else {
                     let tableRowElementInput = document.createElement("input");
                     tableRowElementInput.setAttribute("type", "number");
                     tableRowElementInput.addEventListener(
@@ -96,19 +95,9 @@ function resetMpsTable() {
                     }
 
                     tableRowElementData.appendChild(tableRowElementInput);
-
-                    tableRowElement.appendChild(tableRowElementData);
-                    break;
                 }
 
-                case "available": {
-                    let tableRowElementData = document.createElement("td");
-                    tableRowElementData.textContent =
-                        mpsCalculator.getAvailableList()[i];
-
-                    tableRowElement.appendChild(tableRowElementData);
-                    break;
-                }
+                tableRowElement.appendChild(tableRowElementData);
             }
         }
 

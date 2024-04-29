@@ -111,14 +111,32 @@ function resetMrpTable(component) {
 
         // Table data
         for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
-            if (mrpTableRows[tableRow] === mrpTableRows["week"]) {
+            if (tableRow === "week") {
                 let tableRowElementData = document.createElement("th");
                 tableRowElementData.textContent = i + 1;
 
                 tableRowElement.appendChild(tableRowElementData);
             } else {
                 let tableRowElementData = document.createElement("td");
-                tableRowElementData.textContent = 0;
+
+                if (tableRow === "scheduledReceipts") {
+                    let tableRowElementInput = document.createElement("input");
+                    tableRowElementInput.setAttribute("type", "number");
+                    tableRowElementInput.addEventListener(
+                        "input",
+                        debounce(() => {
+                            calculateMps();
+                            calculateMrps();
+                        }, 400)
+                    );
+
+                    tableRowElementInput.setAttribute("value", 0);
+
+                    tableRowElementData.appendChild(tableRowElementInput);
+                } else {
+                    let tableRowElementData = document.createElement("td");
+                    tableRowElementData.textContent = 0;
+                }
 
                 tableRowElement.appendChild(tableRowElementData);
             }
@@ -188,8 +206,20 @@ function resetMrpTable(component) {
 }
 
 function getVariablesFromInputs() {
-    // Update component parameter values with new values from input elements
     for (let component in componentDictionary) {
+        // Update Scheduled Receipts values with new values from input elements
+        let scheduledReceiptsRowInputs = document.querySelectorAll(
+            `.mrp-components-row #mrp-component-${componentDictionary[component]["id"]} .mrp-component-table
+             tbody tr#scheduled-receipts-row td input`
+        );
+
+        for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
+            componentDictionary[component]["scheduledReceipts"][i] = Number(
+                scheduledReceiptsRowInputs[i].value
+            );
+        }
+
+        // Update component parameter values
         let mrpComponentParameterInputs = document.querySelectorAll(
             `.mrp-components-row #mrp-component-${componentDictionary[component]["id"]} .bottom-row input`
         );
@@ -203,6 +233,7 @@ function getVariablesFromInputs() {
                 parameterInput.value
             );
         }
+        break;
     }
 }
 
@@ -227,15 +258,12 @@ export function calculateMrps() {
 
                 let tableCells = tableRow.getElementsByTagName("td");
                 for (let i = 0; i < tableCells.length; i++) {
-                    tableCells[i].textContent = calculations[tableRowId][i];
-
-                    // TODO: This is the last resort if there is not enough time to change the MRP algorithm.
-                    // Without this, there are empty cells in MRP tables
-                    // if (calculations[tableRowId][i] != null) {
-                    //     tableCells[i].textContent = calculations[tableRowId][i];
-                    // } else {
-                    //     tableCells[i].textContent = 0
-                    // }
+                    if (tableRow.id === "scheduled-receipts-row") {
+                        tableCells[i].firstChild.value =
+                            calculations[tableRowId][i];
+                    } else {
+                        tableCells[i].textContent = calculations[tableRowId][i];
+                    }
                 }
             }
         }

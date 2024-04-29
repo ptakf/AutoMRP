@@ -5,17 +5,39 @@ export class MrpCalculator {
         this.mpsCalculator = mpsCalculator;
     }
 
+    resizeList(list) {
+        // Resize the list passed as an argument according to the weekAmount variable.
+        // Fill empty slots with 0s
+        while (this.mpsCalculator.weekAmount > list.length) {
+            list.push(0);
+        }
+
+        list.length = this.mpsCalculator.weekAmount;
+
+        return list;
+    }
+
     calculateMrp(lowerBom, higherBom = { bomLevel: 0 }) {
         let onHand = lowerBom.onHand;
         let leadTime = lowerBom.leadTime;
         let lotSize = lowerBom.lotSize;
 
         let grossRequirements = []; // Całkowite zapotrzebowanie
-        let scheduledReceipts = []; // Planowane przyjęcia
+        let scheduledReceipts = lowerBom.scheduledReceipts; // Planowane przyjęcia
         let projectedOnHand = []; // Przewidywane na stanie
         let netRequirements = []; // Zapotrzebowanie netto
         let plannedOrderReleases = []; // Planowane zamówienia
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
+
+        for (let list of [
+            scheduledReceipts,
+            // projectedOnHand,
+            // netRequirements,
+            // plannedOrderReleases,
+            // plannedOrderReceipts,
+        ]) {
+            this.resizeList(list);
+        }
 
         if (higherBom.bomLevel == 0) {
             grossRequirements = this.mpsCalculator.productionList.slice(1);

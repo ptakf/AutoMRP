@@ -59,4 +59,6 @@ document
     .getElementById("save-configuration-button")
     .addEventListener("click", saveComponentsToFile);
 
-// createMrpTables(); // Uncomment to load example components on start
+// Uncomment next two lines to load example components on start:
+loadExampleComponents();
+createMrpTables();

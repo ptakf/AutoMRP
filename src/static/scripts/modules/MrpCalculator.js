@@ -23,13 +23,11 @@ export class MrpCalculator {
         let lotSize = lowerBom.lotSize;
 
         let grossRequirements = []; // Całkowite zapotrzebowanie
-        let scheduledReceipts = lowerBom.scheduledReceipts; // Planowane przyjęcia
+        let scheduledReceipts = this.resizeList(lowerBom.scheduledReceipts); // Planowane przyjęcia
         let projectedOnHand = []; // Przewidywane na stanie
         let netRequirements = []; // Zapotrzebowanie netto
         let plannedOrderReleases = []; // Planowane zamówienia
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
-
-        this.resizeList(scheduledReceipts);
 
         if (higherBom.bomLevel == 0) {
             grossRequirements = this.mpsCalculator.productionList.slice(1);

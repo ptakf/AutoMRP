@@ -233,7 +233,6 @@ function getVariablesFromInputs() {
                 parameterInput.value
             );
         }
-        break;
     }
 }
 

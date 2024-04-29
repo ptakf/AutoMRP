@@ -1,5 +1,5 @@
 import { mpsCalculator } from "./calculatorStore.js";
-import { calculateMrps } from "./mrp.js";
+import { calculateMrps } from "./mrpTables.js";
 import { debounce } from "./utils.js";
 
 export function setWeekAmount() {

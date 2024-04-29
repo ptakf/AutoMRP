@@ -3,14 +3,14 @@ import {
     createMpsTable,
     setWeekAmount,
     updateMpsParameterInputElements,
-} from "./modules/mps.js";
+} from "./modules/mpsTables.js";
 import {
     calculateMrps,
     createMrpTables,
     loadComponentsFromFile,
     loadExampleComponents,
     saveComponentsToFile,
-} from "./modules/mrp.js";
+} from "./modules/mrpTables.js";
 import { debounce } from "./modules/utils.js";
 
 // Initialize loading/saving configuration

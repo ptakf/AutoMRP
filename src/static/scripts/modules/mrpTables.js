@@ -1,6 +1,6 @@
 import { mpsCalculator, mrpCalculator } from "./calculatorStore.js";
 import { exampleComponents } from "./exampleComponents.js";
-import { calculateMps } from "./mps.js";
+import { calculateMps } from "./mpsTables.js";
 import { debounce } from "./utils.js";
 
 var componentDictionary = {};

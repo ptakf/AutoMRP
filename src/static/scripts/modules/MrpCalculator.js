@@ -37,24 +37,29 @@ export class MrpCalculator {
                     ? onHand + lotSize - grossRequirements[i]
                     : onHand - grossRequirements[i];
 
-            // Dodaj lotSize do plannedOrderReceipts w bieżącym tygodniu
-            plannedOrderReceipts.push(netDemand < 0 ? lotSize : 0);
-
-            // Dodaj lotSize do plannedOrderReleases w poprzednim tygodniu
-            plannedOrderReleases.push(
-                i > 0 ? (netDemand < 0 ? lotSize : 0) : 0
-            );
+            // Dodaj lotSize do plannedOrderReleases w bieżącym tygodniu
+            plannedOrderReleases.push(netDemand < 0 ? lotSize : 0);
 
             plannedOrderReleases[i] += plannedOrders;
-            plannedOrderReceipts[i] += plannedOrders;
 
             // Zapisz onHand do projectedOnHand
             projectedOnHand.push(onHand);
         }
 
-        // Przesuń wartości plannedOrderReleases w lewo o leadTime względem plannedOrderReceipts
+        // Przesuń wartości plannedOrderReleases w lewo o leadTime
+        if (plannedOrderReleases[0] === 0) {
+            for (let i = 0; i < leadTime; i++) {
+                if (plannedOrderReleases[0] !== 0) break;
+                plannedOrderReleases.push(plannedOrderReleases.shift());
+            }
+        }
+
+        plannedOrderReceipts = plannedOrderReleases.slice();
+
+        // Przesuń wartości plannedOrderReceipts w prawo o leadTime
         for (let i = 0; i < leadTime; i++) {
-            plannedOrderReleases.push(plannedOrderReleases.shift());
+            plannedOrderReceipts.unshift(0);
+            plannedOrderReceipts.pop();
         }
 
         lowerBom.plannedOrderReleases = plannedOrderReleases;

@@ -31,7 +31,7 @@ export var componentDictionary = {
     },
     shoeLace: {
         onHand: 8,
-        leadTime: 43,
+        leadTime: 3,
         lotSize: 50,
         bomLevel: 1,
         plannedOrderReleases: [],

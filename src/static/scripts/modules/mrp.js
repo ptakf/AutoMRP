@@ -1,9 +1,8 @@
-import { MrpCalculator } from "./MrpCalculator.js";
+import { mpsCalculator, mrpCalculator } from "./calculatorStore.js";
 import { exampleComponents } from "./exampleComponents.js";
-import { calculateMps, mpsCalculator } from "./mps.js";
+import { calculateMps } from "./mps.js";
 import { debounce } from "./utils.js";
 
-var mrpCalculator = new MrpCalculator(mpsCalculator);
 var componentDictionary = {};
 
 var mrpTableRows = {

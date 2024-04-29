@@ -1,8 +1,6 @@
-import { MpsCalculator } from "./MpsCalculator.js";
+import { mpsCalculator } from "./calculatorStore.js";
 import { calculateMrps } from "./mrp.js";
 import { debounce } from "./utils.js";
-
-export var mpsCalculator = new MpsCalculator();
 
 export function setWeekAmount() {
     mpsCalculator.setWeekAmount(

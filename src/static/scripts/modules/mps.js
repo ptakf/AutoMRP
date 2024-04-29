@@ -3,12 +3,14 @@ import { calculateMrps } from "./mrp.js";
 import { debounce } from "./utils.js";
 
 export function setWeekAmount() {
+    // Set Week Amount in the MPS calculator to the value of the Week Amount input element
     mpsCalculator.setWeekAmount(
         document.getElementById("set-week-amount-input").value
     );
 }
 
-export function initializeMpsParameterInputs() {
+export function updateMpsParameterInputElements() {
+    // Update MPS parameter input elements with values from MPS calculator
     document.getElementById("set-week-amount-input").value =
         mpsCalculator.getWeekAmount();
 
@@ -20,6 +22,8 @@ export function initializeMpsParameterInputs() {
 }
 
 function resetMpsTable() {
+    // Create a new MPS table and replace the old one
+
     // Create MPS table
     let mpsTable = document.createElement("table");
     mpsTable.classList.add("table", "table-striped-columns", "table-bordered");
@@ -29,6 +33,7 @@ function resetMpsTable() {
     mpsTable.appendChild(tableElementBody);
 
     let tableRows = {
+        // MPS table rows
         week: {
             name: "Week",
             id: "week-row",
@@ -47,31 +52,36 @@ function resetMpsTable() {
         },
     };
 
+    // Generate MPS table content
     for (let tableRow in tableRows) {
-        // Table row
+        // Create a new row
         let tableRowElement = document.createElement("tr");
         tableRowElement.setAttribute("id", tableRows[tableRow]["id"]);
 
-        // Table header
+        // Create a vertical header
         let tableRowElementHeader = document.createElement("th");
         tableRowElementHeader.textContent = tableRows[tableRow]["name"];
 
         tableRowElement.appendChild(tableRowElementHeader);
 
-        // Table data
+        // Create row data
         for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
             if (tableRow === "week") {
+                // Fill the horizontal header row - Week row
                 let tableRowElementData = document.createElement("th");
                 tableRowElementData.textContent = i + 1;
 
                 tableRowElement.appendChild(tableRowElementData);
             } else {
+                // Fill the data rows
                 let tableRowElementData = document.createElement("td");
 
                 if (tableRow === "available") {
+                    // Fill Available row with data from MPS calculator
                     tableRowElementData.textContent =
                         mpsCalculator.getAvailableList()[i];
                 } else {
+                    // Create input elements for Anticipated Demand and Production rows
                     let tableRowElementInput = document.createElement("input");
                     tableRowElementInput.setAttribute("type", "number");
                     tableRowElementInput.addEventListener(
@@ -83,11 +93,13 @@ function resetMpsTable() {
                     );
 
                     if (tableRow === "anticipatedDemand") {
+                        // Fill Anticipated Demand row with data from MPS calculator
                         tableRowElementInput.setAttribute(
                             "value",
                             `${mpsCalculator.getAnticipatedDemandList()[i]}`
                         );
                     } else {
+                        // Fill Production row with data from MPS calculator
                         tableRowElementInput.setAttribute(
                             "value",
                             `${mpsCalculator.getProductionList()[i]}`
@@ -108,22 +120,23 @@ function resetMpsTable() {
     document.querySelector("table#mps-table").replaceWith(mpsTable);
 }
 
-function getVariablesFromInputs() {
-    // Update variables with values from input elements
-    // Update Lead Time and On Hand
+function getVariablesFromMpsTable() {
+    // Set Lead Time in the MPS calculator to the value of the Lead Time input element
     mpsCalculator.setLeadTime(
         document.getElementById("set-mps-lead-time-input").value
     );
+    // Set On Hand in the MPS calculator to the value of the On Hand input element
     mpsCalculator.setOnHand(
         document.getElementById("set-mps-on-hand-input").value
     );
 
-    // Update Anticipated Demand list
+    // Update Anticipated Demand list in the MPS calculator with the values from the Anticipated Demand row input elements
     let anticipatedDemandInputElements = document.querySelectorAll(
         "table#mps-table tr#anticipated-row td input"
     );
 
     let anticipatedDemandList = [];
+
     for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         anticipatedDemandList[i] = Number(
             anticipatedDemandInputElements[i].value
@@ -132,12 +145,13 @@ function getVariablesFromInputs() {
 
     mpsCalculator.setAnticipatedDemandList(anticipatedDemandList);
 
-    // Update Production list
+    // Update Production list in the MPS calculator with the values from the Production row input elements
     let productionInputElements = document.querySelectorAll(
         "table#mps-table tr#production-row td input"
     );
 
     let productionList = [];
+
     for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
         productionList[i] = Number(productionInputElements[i].value);
     }
@@ -146,7 +160,8 @@ function getVariablesFromInputs() {
 }
 
 export function calculateMps() {
-    getVariablesFromInputs();
+    // Calculate MPS and update Available row in MPS table
+    getVariablesFromMpsTable();
     mpsCalculator.calculateMps();
 
     // Update Available row
@@ -154,7 +169,7 @@ export function calculateMps() {
         "table#mps-table tr#available-row td"
     );
     for (let i = 0; i < mpsCalculator.getWeekAmount(); i++) {
-        // Replace values in Available row
+        // Replace values in Available row with calculated values
         availableElements[i].textContent = mpsCalculator.getAvailableList()[i];
 
         // Toggle highlighting cells with negative values
@@ -172,6 +187,4 @@ export function createMpsTable() {
     mpsCalculator.resizeLists();
 
     resetMpsTable();
-
-    calculateMps();
 }

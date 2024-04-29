@@ -55,7 +55,7 @@ export class MpsCalculator {
     }
 
     resizeLists() {
-        // Resize the lists according to the weekAmount variable. Fill empty slots with 0s
+        // Set MPS lists' sizes to the weekAmount variable by filling them with 0s
         for (let array of [
             this.anticipatedDemandList,
             this.productionList,
@@ -73,11 +73,13 @@ export class MpsCalculator {
         // Calculate product availability in the MPS
         for (let i = 0; i < this.weekAmount; i++) {
             if (i == 0) {
+                // Calculate product availability for the first week
                 this.availableList[i] =
                     this.onHand -
                     this.anticipatedDemandList[i] +
                     this.productionList[i];
             } else {
+                // Calculate product availability for the other weeks
                 this.availableList[i] =
                     this.availableList[i - 1] -
                     this.anticipatedDemandList[i] +

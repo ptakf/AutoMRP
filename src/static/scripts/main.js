@@ -1,8 +1,8 @@
 import {
     calculateMps,
     createMpsTable,
-    initializeMpsParameterInputs,
     setWeekAmount,
+    updateMpsParameterInputElements,
 } from "./modules/mps.js";
 import {
     calculateMrps,
@@ -13,9 +13,25 @@ import {
 } from "./modules/mrp.js";
 import { debounce } from "./modules/utils.js";
 
-// Initialize MPS and MRP components
-initializeMpsParameterInputs();
+// Initialize loading/saving configuration
+document
+    .getElementById("load-configuration-input")
+    .addEventListener("change", (input) => {
+        loadComponentsFromFile(input.target.files[0]);
+    });
 
+document
+    .getElementById("load-example-configuration-button")
+    .addEventListener("click", () => {
+        loadExampleComponents();
+        createMrpTables();
+    });
+
+document
+    .getElementById("save-configuration-button")
+    .addEventListener("click", saveComponentsToFile);
+
+// Initialize MPS and MRP components
 document
     .getElementById("set-week-amount-form")
     .addEventListener("submit", (event) => {
@@ -23,6 +39,9 @@ document
 
         createMpsTable();
         createMrpTables();
+
+        calculateMps();
+        calculateMrps();
 
         event.preventDefault();
     });
@@ -40,24 +59,8 @@ for (let inputElementId of [
     );
 }
 
+updateMpsParameterInputElements();
 createMpsTable();
-
-document
-    .getElementById("load-configuration-input")
-    .addEventListener("change", (input) => {
-        loadComponentsFromFile(input.target.files[0]);
-    });
-
-document
-    .getElementById("load-example-configuration-button")
-    .addEventListener("click", () => {
-        loadExampleComponents();
-        createMrpTables();
-    });
-
-document
-    .getElementById("save-configuration-button")
-    .addEventListener("click", saveComponentsToFile);
 
 // Uncomment next two lines to load example components on start:
 // loadExampleComponents();

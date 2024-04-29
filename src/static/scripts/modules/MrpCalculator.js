@@ -5,7 +5,7 @@ export class MrpCalculator {
         this.mpsCalculator = mpsCalculator;
     }
 
-    calculateMrp(lowerBom, higherBom = { bomLevel: 0 }) {
+    calculateMrp(lowerBom, higherBom = null) {
         let onHand = lowerBom.onHand;
         let leadTime = lowerBom.leadTime;
         let lotSize = lowerBom.lotSize;
@@ -17,7 +17,7 @@ export class MrpCalculator {
         let plannedOrderReleases = []; // Planowane zamówienia
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
 
-        if (higherBom.bomLevel == 0) {
+        if (higherBom === null) {
             grossRequirements = this.mpsCalculator.productionList.slice(1);
             grossRequirements.push(0);
         } else {
@@ -28,7 +28,7 @@ export class MrpCalculator {
             let netDemand = onHand - grossRequirements[i];
             let plannedOrders = 0;
 
-            // Oblicz net demand
+            // Oblicz netDemand
             netRequirements.push(netDemand < 0 ? Math.abs(netDemand) : 0);
 
             // Aktualizuj onHand

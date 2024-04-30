@@ -13,18 +13,6 @@ import {
 } from "./modules/mrpTables.js";
 import { debounce } from "./modules/utils.js";
 
-// Add a service worker
-window.onload = () => {
-    "use strict";
-
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register(
-            "./static/scripts/modules/serviceWorker.js",
-            { scope: "/" }
-        );
-    }
-};
-
 // Initialize loading/saving configuration
 document
     .getElementById("load-configuration-input")

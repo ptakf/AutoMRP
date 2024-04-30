@@ -18,8 +18,18 @@ export class MrpCalculator {
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
 
         if (higherBom.bomLevel == 0) {
-            grossRequirements = this.mpsCalculator.productionList.slice(1);
-            grossRequirements.push(0);
+            grossRequirements = this.mpsCalculator.productionList;
+            for (let i = 0; i < this.mpsCalculator.leadTime; i++) {
+                grossRequirements = grossRequirements.slice(1);
+                grossRequirements.push(0);
+                if (grossRequirements[0] !== 0) {
+                    alert(
+                        "Maximum possible lead time is " +
+                            this.mpsCalculator.leadTime
+                    );
+                    break;
+                }
+            }
         } else {
             grossRequirements = higherBom.plannedOrderReleases;
         }

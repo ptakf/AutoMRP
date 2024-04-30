@@ -1,5 +1,5 @@
-import { MpsCalculator } from "./MpsCalculator.js";
-import { MrpCalculator } from "./MrpCalculator.js";
+import { MpsCalculator } from "./mpsCalculator.js";
+import { MrpCalculator } from "./mrpCalculator.js";
 
 export var mpsCalculator = new MpsCalculator();
 export var mrpCalculator = new MrpCalculator(mpsCalculator);

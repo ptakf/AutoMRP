@@ -2,7 +2,7 @@
     "name": "AutoMRP - MRP Calculator",
     "short_name": "AutoMRP",
     "description": "AutoMRP is a Master Production Schedule (MPS) and Material Requirements Planning (MRP) calculator.",
-    "start_url": "/src/index.html",
+    "start_url": "/AutoMP/src/index.html",
     "display": "standalone",
     "background_color": "#f8f9fe",
     "theme_color": "#3b49e7",

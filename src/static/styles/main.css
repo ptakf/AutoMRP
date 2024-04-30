@@ -37,9 +37,12 @@ h2 {
 h3 {
     font-size: 1.6rem;
     margin-bottom: 20px;
+    padding-left: 0px !important;
 }
 
-h3 {
+h4 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
     padding-left: 0px !important;
 }
 
@@ -61,16 +64,16 @@ section {
 }
 
 .mrp-components-row,
-.mrp-components-row>div {
+.mrp-components-row > div {
     width: 100%;
 }
 
-.container>section:nth-of-type(2)>.row:nth-last-of-type(2) {
+.container > section:nth-of-type(2) > .row:nth-last-of-type(2) {
     margin-bottom: 20px;
     overflow-x: scroll;
 }
 
-.mrp-components-row>div>.row:nth-last-of-type(2) {
+.mrp-components-row > div > .row:nth-last-of-type(2) {
     margin-bottom: 20px;
     overflow-x: scroll;
 }
@@ -80,11 +83,11 @@ section {
     row-gap: 10px;
 }
 
-.container>section:first-child>.row {
+.container > section:first-child > .row {
     text-align: center;
 }
 
-.container>section:first-child>.row>div:first-child {
+.container > section:first-child > .row > div:first-child {
     border-right: 1px dotted #000000;
 }
 
@@ -96,16 +99,16 @@ section {
     margin-left: auto;
 }
 
-#set-week-amount-form>label {
+#set-week-amount-form > label {
     width: 80%;
     line-height: 250%;
 }
 
-#set-week-amount-form>input {
+#set-week-amount-form > input {
     width: 80%;
 }
 
-#set-week-amount-form>button {
+#set-week-amount-form > button {
     margin-left: 10px;
 }
 
@@ -137,7 +140,6 @@ input {
 }
 
 input[type="number"] {
-
     .no-arrows::-webkit-outer-spin-button,
     .no-arrows::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -158,16 +160,15 @@ button:hover {
     opacity: 0.9;
 }
 
-.container>section:first-child input {
+.container > section:first-child input {
     width: 80%;
     margin: 0 auto;
     margin-bottom: 20px;
 }
 
-.container>section:first-child button {
+.container > section:first-child button {
     background-color: grey !important;
 }
-
 
 /* Tables */
 table #week-row th {
@@ -192,17 +193,16 @@ table input {
     width: 100%;
 }
 
-
 /* Scroll */
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar {
     width: 10px;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -212,7 +212,7 @@ table input {
 
 /* Mobile */
 @media only screen and (max-width: 920px) {
-    .container>section:first-child>.row>div:first-child {
+    .container > section:first-child > .row > div:first-child {
         border-right: none;
         margin-bottom: 40px;
     }
@@ -241,13 +241,13 @@ table input {
         margin: 40px auto 20px auto;
     }
 
-    #set-week-amount-form>label {
+    #set-week-amount-form > label {
         display: block;
         width: 60%;
         max-height: 40px;
     }
 
-    #set-week-amount-form>input {
+    #set-week-amount-form > input {
         width: 30%;
         margin-left: 10px;
         max-height: 40px;

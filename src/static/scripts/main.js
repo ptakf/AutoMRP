@@ -19,7 +19,8 @@ window.onload = () => {
 
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register(
-            "./static/scripts/modules/serviceWorker.js"
+            "./static/scripts/modules/serviceWorker.js",
+            { scope: "/" }
         );
     }
 };

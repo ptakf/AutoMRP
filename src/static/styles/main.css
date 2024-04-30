@@ -20,43 +20,30 @@ footer {
     box-shadow: -6px -6px 10px rgba(0, 0, 0, 0.1);
 }
 
+h1 {
+    font-weight: bold;
+}
+
 header h1 {
     font-size: 36px;
 }
 
-.top-row {
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.6rem;
     margin-bottom: 20px;
 }
 
-.top-row input {
-    margin: 0 auto;
-    width: 50%;
+h3 {
+    padding-left: 0px !important;
 }
 
-.top-row label {
-    line-height: 200%;
-}
-
-button {
-    background-color: #3b49e7 !important;
-    color: white !important;
-}
-
-section label,
-input {
-    display: block;
-}
-
-input[type="number"] {
-    .no-arrows::-webkit-outer-spin-button,
-    .no-arrows::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    -moz-appearance: textfield;
-    appearance: textfield;
-}
-
+/*  Grid  */
 section {
     background-color: #fefefe;
     padding: 40px;
@@ -66,6 +53,123 @@ section {
     box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
+.top-row {
+    margin-bottom: 20px;
+    padding-top: 30px;
+    margin-top: 50px;
+    border-top: 1px dotted black;
+}
+
+.mrp-components-row,
+.mrp-components-row>div {
+    width: 100%;
+}
+
+.container>section:nth-of-type(2)>.row:nth-last-of-type(2) {
+    margin-bottom: 20px;
+    overflow-x: scroll;
+}
+
+.mrp-components-row>div>.row:nth-last-of-type(2) {
+    margin-bottom: 20px;
+    overflow-x: scroll;
+}
+
+.bottom-row,
+.bottom-row .row {
+    row-gap: 10px;
+}
+
+.container>section:first-child>.row {
+    text-align: center;
+}
+
+.container>section:first-child>.row>div:first-child {
+    border-right: 1px dotted #000000;
+}
+
+/* Forms */
+#set-week-amount-form {
+    width: 400px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: auto;
+}
+
+#set-week-amount-form>label {
+    width: 80%;
+    line-height: 250%;
+}
+
+#set-week-amount-form>input {
+    width: 80%;
+}
+
+#set-week-amount-form>button {
+    margin-left: 10px;
+}
+
+.bottom-row input {
+    width: 20%;
+}
+
+.bottom-row label {
+    width: 20%;
+    line-height: 200%;
+}
+
+.bottom-row input {
+    width: 20%;
+}
+
+.mrp-components-row label {
+    width: 40%;
+    line-height: 200%;
+}
+
+.mrp-components-row .bottom-row input {
+    width: 40%;
+}
+
+section label,
+input {
+    display: block;
+}
+
+input[type="number"] {
+
+    .no-arrows::-webkit-outer-spin-button,
+    .no-arrows::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* Buttons */
+button {
+    background-color: #3b49e7 !important;
+    color: white !important;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.container>section:first-child input {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.container>section:first-child button {
+    background-color: grey !important;
+}
+
+
+/* Tables */
 table #week-row th {
     background-color: #697afd !important;
     color: #ffffff;
@@ -78,35 +182,39 @@ table input {
     text-align: center;
 }
 
+td {
+    min-width: 60px;
+}
+
 table input {
     border: 1px solid grey;
     border-radius: 8px !important;
     width: 100%;
 }
 
-.bottom-row label {
-    width: 20%;
-    line-height: 200%;
+
+/* Scroll */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
 }
 
-.bottom-row input {
-    width: 20%;
+::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
 }
 
-.bottom-row,
-.bottom-row .row {
-    row-gap: 10px;
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(132, 166, 235);
 }
 
-.italic {
-    font-style: italic;
-}
-
+/* Mobile */
 @media only screen and (max-width: 920px) {
-    section h2 {
-        text-align: center;
-        font-size: 32px;
-        font-weight: bold;
+    .container>section:first-child>.row>div:first-child {
+        border-right: none;
+        margin-bottom: 40px;
     }
 
     .top-row input {
@@ -126,5 +234,20 @@ table input {
 
     .bottom-row input {
         width: 40%;
+    }
+
+    #set-week-amount-form {
+        width: 100%;
+        margin: 40px auto 20px auto;
+    }
+
+    #set-week-amount-form>label {
+        display: block;
+        width: 60%;
+    }
+
+    #set-week-amount-form>input {
+        width: 40%;
+        margin-left: 10px;
     }
 }

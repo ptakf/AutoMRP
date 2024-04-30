@@ -80,7 +80,6 @@ function resetMrpTable(component) {
 
     // Create MRP component row
     let mrpComponentRow = document.createElement("div");
-    mrpComponentRow.classList.add("row");
     mrpComponentRow.setAttribute("id", `mrp-component-${component["id"]}`);
 
     // Create MRP component Title row
@@ -139,6 +138,7 @@ function resetMrpTable(component) {
                     tableRowElementInput.addEventListener(
                         "input",
                         debounce(() => {
+                            changeColor();
                             calculateMps();
                             calculateMrps();
                         }, 400)
@@ -169,7 +169,7 @@ function resetMrpTable(component) {
 
     for (let parameter in mrpTableParameterInputElements) {
         let parameterColumn = document.createElement("div");
-        parameterColumn.classList.add("col-sm-4", "d-inline-flex");
+        parameterColumn.classList.add("col-md-4", "d-inline-flex");
 
         // Create a Parameter Input Element label
         let parameterLabel = document.createElement("label");
@@ -194,6 +194,7 @@ function resetMrpTable(component) {
         parameterInput.addEventListener(
             "input",
             debounce(() => {
+                changeColor();
                 calculateMps();
                 calculateMrps();
             }, 400)
@@ -295,8 +296,7 @@ export function calculateMrps() {
 
                         // Toggle highlighting cells with negative values
                         if (tableCells[i].textContent < 0) {
-                            tableCells[i].style.backgroundColor = "#dc3545";
-                            tableCells[i].style.color = "#f8f9fa";
+                            tableCells[i].style.color = "#ff0000";
                             tableCells[i].style.fontWeight = "bold";
                         } else {
                             tableCells[i].removeAttribute("style");

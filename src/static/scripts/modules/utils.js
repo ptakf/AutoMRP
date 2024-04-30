@@ -19,3 +19,4 @@ export function generateId(idLength = 9) {
 
     return id;
 }
+

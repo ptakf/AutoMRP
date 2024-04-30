@@ -174,8 +174,7 @@ export function calculateMps() {
 
         // Toggle highlighting cells with negative values
         if (availableElements[i].textContent < 0) {
-            availableElements[i].style.backgroundColor = "#dc3545";
-            availableElements[i].style.color = "#f8f9fa";
+            availableElements[i].style.color = "#ff0000";
             availableElements[i].style.fontWeight = "bold";
         } else {
             availableElements[i].removeAttribute("style");

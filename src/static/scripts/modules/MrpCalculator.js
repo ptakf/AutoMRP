@@ -5,7 +5,7 @@ export class MrpCalculator {
         this.mpsCalculator = mpsCalculator;
     }
 
-    calculateMrp(lowerBom, higherBom = null) {
+    calculateMrp(lowerBom, higherBom = { bomLevel: 0 }) {
         let onHand = lowerBom.onHand;
         let leadTime = lowerBom.leadTime;
         let lotSize = lowerBom.lotSize;
@@ -17,7 +17,7 @@ export class MrpCalculator {
         let plannedOrderReleases = []; // Planowane zamówienia
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
 
-        if (higherBom === null) {
+        if (higherBom.bomLevel == 0) {
             grossRequirements = this.mpsCalculator.productionList.slice(1);
             grossRequirements.push(0);
         } else {
@@ -25,43 +25,46 @@ export class MrpCalculator {
         }
 
         for (let i = 0; i < this.mpsCalculator.weekAmount; i++) {
-            let netDemand = onHand - grossRequirements[i];
-            let plannedOrders = 0;
-
-            // Oblicz netDemand
-            netRequirements.push(netDemand < 0 ? Math.abs(netDemand) : 0);
+            // Obliczenie stanu zapasów (onHand)
+            onHand -= grossRequirements[i];
 
             // Aktualizuj onHand
             onHand += scheduledReceipts[i];
 
-            onHand =
-                netDemand < 0
-                    ? onHand + lotSize - grossRequirements[i]
-                    : onHand - grossRequirements[i];
-
-            // Dodaj lotSize do plannedOrderReleases w bieżącym tygodniu
-            plannedOrderReleases.push(netDemand < 0 ? lotSize : 0);
-
-            plannedOrderReleases[i] += plannedOrders;
-
-            // Zapisz onHand do projectedOnHand
-            projectedOnHand.push(onHand);
-        }
-
-        // Przesuń wartości plannedOrderReleases w lewo o leadTime
-        if (plannedOrderReleases[0] === 0) {
-            for (let i = 0; i < leadTime; i++) {
-                if (plannedOrderReleases[0] !== 0) break;
-                plannedOrderReleases.push(plannedOrderReleases.shift());
+            // Dodanie wartości netDemand do tablicy netRequirements
+            if (onHand < 0) {
+                netRequirements.push(Math.abs(onHand));
+            } else {
+                netRequirements.push(0);
             }
-        }
 
-        plannedOrderReceipts = plannedOrderReleases.slice();
+            // Dodanie lotSize do plannedOrderReleases na odpowiedniej pozycji
+            if (netRequirements[i] > 0) {
+                plannedOrderReleases.push(lotSize);
+            } else {
+                plannedOrderReleases.push(0);
+            }
 
-        // Przesuń wartości plannedOrderReceipts w prawo o leadTime
-        for (let i = 0; i < leadTime; i++) {
-            plannedOrderReceipts.unshift(0);
-            plannedOrderReceipts.pop();
+            // Przesunięcie wartości plannedOrderReleases o leadTime w lewo
+            for (let j = 0; j < leadTime; j++) {
+                if (i - j >= 0 && plannedOrderReleases[i - j - 1] === 0) {
+                    plannedOrderReleases[i - j - 1] =
+                        plannedOrderReleases[i - j];
+                    plannedOrderReleases[i - j] = 0;
+                } else {
+                    break;
+                }
+            }
+
+            // Przesunięcie wartości plannedOrderReceipts o leadTime w prawo względem plannedOrderReleases
+            plannedOrderReceipts[i] = 0; // Zerowanie wartości plannedOrderReceipts
+            if (i >= leadTime) {
+                plannedOrderReceipts[i] = plannedOrderReleases[i - leadTime];
+            }
+
+            onHand += plannedOrderReceipts[i];
+
+            projectedOnHand.push(onHand);
         }
 
         lowerBom.plannedOrderReleases = plannedOrderReleases;

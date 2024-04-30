@@ -137,8 +137,7 @@ function resetMrpTable(component) {
                     tableRowElementInput.setAttribute("type", "number");
                     tableRowElementInput.addEventListener(
                         "input",
-                        debounce(() => {
-                            changeColor();
+                        debounce(() => {                       
                             calculateMps();
                             calculateMrps();
                         }, 400)

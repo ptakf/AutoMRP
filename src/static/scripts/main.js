@@ -14,11 +14,15 @@ import {
 import { debounce } from "./modules/utils.js";
 
 // Add a service worker
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register(
-        "./static/scripts/modules/serviceWorker.js"
-    );
-}
+window.onload = () => {
+    "use strict";
+
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register(
+            "./static/scripts/modules/serviceWorker.js"
+        );
+    }
+};
 
 // Initialize loading/saving configuration
 document

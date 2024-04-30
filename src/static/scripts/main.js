@@ -19,7 +19,7 @@ window.onload = () => {
 
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register(
-            "./static/serviceWorker.js"
+            "./static/scripts/modules/serviceWorker.js"
         );
     }
 };

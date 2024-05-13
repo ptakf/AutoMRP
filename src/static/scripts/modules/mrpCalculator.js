@@ -16,6 +16,7 @@ export class MrpCalculator {
         let netRequirements = []; // Zapotrzebowanie netto
         let plannedOrderReleases = []; // Planowane zamówienia
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
+        let ordersNeeded =0;
 
         if (higherBom.bomLevel == 0) {
             grossRequirements = this.mpsCalculator.productionList;
@@ -41,6 +42,11 @@ export class MrpCalculator {
             // Aktualizuj onHand
             onHand += scheduledReceipts[i];
 
+            // Obliczenie ilości potrzebnych zamówień
+            if (grossRequirements[i] > 0) {
+                ordersNeeded += Math.ceil(grossRequirements[i]  / lotSize);
+            }
+            
             // Dodanie wartości netDemand do tablicy netRequirements
             if (onHand < 0) {
                 netRequirements.push(Math.abs(onHand));
@@ -49,8 +55,9 @@ export class MrpCalculator {
             }
 
             // Dodanie lotSize do plannedOrderReleases na odpowiedniej pozycji
-            if (netRequirements[i] > 0) {
+            if (netRequirements[i] > 0 && ordersNeeded > 0) {
                 plannedOrderReleases.push(lotSize);
+                ordersNeeded --;
             } else {
                 plannedOrderReleases.push(0);
             }

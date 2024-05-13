@@ -41,7 +41,7 @@ export class MrpCalculator {
         for (let i = 0; i < grossRequirements.length; i++) {
             requirementsSum += grossRequirements[i];
         }
-        ordersNeeded += Math.ceil(requirementsSum / lotSize);
+        ordersNeeded += Math.ceil((requirementsSum - scheduledSum - onHand) / lotSize);
 
         for (let i = 0; i < scheduledReceipts.length; i++) {
             scheduledSum += scheduledReceipts[i];

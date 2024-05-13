@@ -18,6 +18,7 @@ export class MrpCalculator {
         let plannedOrderReceipts = []; // Planowane przyjęcie zamówień
         let ordersNeeded = 0; // Liczba potrzebnych zamówień
         let requirementsSum = 0; // Suma zapotrzepowania
+        let scheduledSum = 0; // Suma planowanych przyjęć
 
         if (higherBom.bomLevel == 0) {
             grossRequirements = this.mpsCalculator.productionList;
@@ -40,8 +41,14 @@ export class MrpCalculator {
         for (let i = 0; i < grossRequirements.length; i++) {
             requirementsSum += grossRequirements[i];
         }
-        ordersNeeded += Math.ceil(requirementsSum  / lotSize);
-       
+        ordersNeeded += Math.ceil(requirementsSum / lotSize);
+
+        for (let i = 0; i < scheduledReceipts.length; i++) {
+            scheduledSum += scheduledReceipts[i];
+        }
+        if (scheduledSum + onHand > requirementsSum) {
+            ordersNeeded -= Math.ceil(scheduledSum + onHand / lotSize);
+        }
 
         for (let i = 0; i < this.mpsCalculator.weekAmount; i++) {
             // Obliczenie stanu zapasów (onHand)
@@ -51,10 +58,13 @@ export class MrpCalculator {
             onHand += scheduledReceipts[i];
 
             // Aktualizowanie liczb potrzebynch zamówień
-            if ((onHand + grossRequirements[i]) > lotSize) {
+            if (
+                (onHand + grossRequirements[i] && grossRequirements[i] > 0) >
+                lotSize
+            ) {
                 ordersNeeded--;
             }
-            
+
             // Dodanie wartości netDemand do tablicy netRequirements
             if (onHand < 0) {
                 netRequirements.push(Math.abs(onHand));
@@ -65,7 +75,7 @@ export class MrpCalculator {
             // Dodanie lotSize do plannedOrderReleases na odpowiedniej pozycji
             if (netRequirements[i] > 0 && ordersNeeded > 0) {
                 plannedOrderReleases.push(lotSize);
-                ordersNeeded --;
+                ordersNeeded--;
             } else {
                 plannedOrderReleases.push(0);
             }

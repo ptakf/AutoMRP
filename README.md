@@ -11,6 +11,6 @@
 
 AutoMRP is a Master Production Schedule (MPS) and Material Requirements Planning (MRP) calculator.
 
-You can try it at: https://ptakf-uek.github.io/AutoMRP
+You can try it at: https://ptakf.github.io/AutoMRP
 
 Project developed by Maksymilian Malichenko, Filip Ptak, Krystian Taf and Michał Warszawski.
